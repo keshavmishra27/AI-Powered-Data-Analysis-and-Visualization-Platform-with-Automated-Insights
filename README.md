@@ -21,7 +21,7 @@ Exportable visual reports and downloadable CSV results
 
 <br>
 
-#Tech Stack
+# Tech Stack
 <br>
 Language: Python
 
@@ -33,7 +33,7 @@ Visualization: Matplotlib, Plotly
 
 <br>
 
-#Metrics / Impact
+#  Impact
 <br>
 
 Reduced manual analysis workload by ~60% through automation of preprocessing and reporting (internal project metric)
@@ -41,7 +41,7 @@ Reduced manual analysis workload by ~60% through automation of preprocessing and
 Designed to help teams quickly move from raw data to decision ready insights
 
 <br>
-Quickstart
+# Quickstart
 <br>
 Prerequisites
 
@@ -70,6 +70,60 @@ Open http://localhost:5000 (or the port printed by run.py) and upload a CSV to t
 <br>
 # Project Structure
 <pre><code>
+  AI-Powered-Data-Analysis-and-Visualization-Platform/
+│
+├── README.md
+├── run.py                    
+├── requirements.txt          
+├── .env                      
+├── backend/                   
+│   ├── __init__.py
+│   ├── app.py                
+│   ├── config.py              
+│   ├── credentials.py        
+│   ├── forms.py               
+│   ├── scores.py              
+│   ├── test_models.py        
+│   ├── __init__db.py         
+│   ├── static/                
+│   │   ├── css/
+│   │   │   └── animations.css
+│   │   └── js/
+│   │       └── animations.js
+│   ├── templates/             
+│   │   ├── base.html
+│   │   ├── home.html
+│   │   ├── upload.html
+│   │   ├── visualize.html
+│   │   ├── result.html
+│   │   ├── configure.html
+│   │   ├── leaderboard.html
+│   │   ├── login.html
+│   │   └── register.html
+│   └── uploads/               
+│
+├── instance/                 
+│   └── yourdatabase.db
+│
+├── uploads/                   
+│   ├── AIML_C_assessment.xlsx
+│   ├── Movie_collection_train.csv
+│   ├── Movie_regression.csv
+│   ├── State-Wise_Dataset_Final.csv
+│   └── processed_*.csv
+│
+├── processed/               
+│   ├── plots/
+│   │   ├── *_hist.png
+│   │   ├── *_corr.png
+│   │   └── *_box.png
+│   ├── *_processed.csv
+│   ├── *_processed.json
+│   ├── *_summary.pdf
+│   ├── *_summary_chart.png
+│   └── *_report.pdf
+│
+└── __pycache__/  
 </code></pre>
 <br>
 
