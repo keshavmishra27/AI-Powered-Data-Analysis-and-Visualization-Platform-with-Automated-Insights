@@ -11,10 +11,10 @@ email-validator==2.2.0
 python-dotenv==1.0.1
 Werkzeug==3.0.4
 
-pandas==2.2.2
-numpy==1.26.4
-scikit-learn==1.5.1
-matplotlib==3.9.0
-plotly==5.22.0
+pandas>=2.2.3
+numpy>=1.26.4
+scikit-learn>=1.5.1
+matplotlib>=3.9.0
+plotly>=5.22.0
 
 google-generativeai==0.7.2

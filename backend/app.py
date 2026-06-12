@@ -41,6 +41,32 @@ ALLOWED_EXTENSIONS = {"csv", "xlsx", "xls"}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def safe_read_csv(filepath, **kwargs):
+    import pandas.errors
+    configs_to_try = [
+        {}, # default utf-8, comma
+        {'encoding': 'latin1'}, # latin1, comma
+        {'sep': None, 'engine': 'python'}, # utf-8, sniff separator
+        {'encoding': 'latin1', 'sep': None, 'engine': 'python'}, # latin1, sniff separator
+        {'encoding': 'latin1', 'on_bad_lines': 'skip'} # last resort: skip bad lines
+    ]
+    last_err = None
+    for config in configs_to_try:
+        current_kwargs = kwargs.copy()
+        current_kwargs.update(config)
+        try:
+            return pd.read_csv(filepath, **current_kwargs)
+        except Exception as e:
+            last_err = e
+            continue
+    raise last_err
+
+def load_dataframe(filepath, **kwargs):
+    if filepath.lower().endswith(('.xlsx', '.xls')):
+        return pd.read_excel(filepath, **kwargs)
+    else:
+        return safe_read_csv(filepath, **kwargs)
+
 
 def create_pdf_with_insights(df, workflow_log, weighted_stats, pdf_path):
     from reportlab.lib.pagesizes import letter
@@ -229,10 +255,7 @@ def upload_page():
             db.session.commit()
 
             try:
-                if filename.endswith('.csv'):
-                    df = pd.read_csv(file_path, nrows=1)
-                else:
-                    df = pd.read_excel(file_path, nrows=1)
+                df = load_dataframe(file_path, nrows=1)
                 suggested_mapping = ai_schema_suggestion(df)
                 session['uploaded_columns'] = df.columns.tolist()
                 session['ai_schema_suggest'] = suggested_mapping
@@ -258,7 +281,7 @@ def configure(filename):
 
 
     # Load CSV columns
-    df = pd.read_csv(file_path)
+    df = load_dataframe(file_path)
     columns = df.columns.tolist()
 
     # ✅ Example AI suggestions (replace with your real AI call)
@@ -286,8 +309,8 @@ def configure(filename):
 
         # ✅ Handle visualize button
         if action == "visualize":
-            # Do your visualization logic here
-            return render_template("visualize.html", filename=filename, config=config, df=df.to_html(classes="table table-bordered"))
+            session['data_file'] = file_path
+            return redirect(url_for("app_blueprint.visualize_page", filename=filename))
 
         # ✅ Handle analyze button
         elif action == "analyze":
@@ -340,7 +363,7 @@ def visualize_page(filename):
         flash("Processed file not found. Please re-process your file.", category='danger')
         return redirect(url_for('app_blueprint.upload_page'))
 
-    df = pd.read_csv(file_path)
+    df = load_dataframe(file_path)
 
     numeric_cols = df.select_dtypes(include='number').columns
     insights = {}
@@ -500,7 +523,7 @@ def build_ai_summary(df: pd.DataFrame):
 
 
 def run_full_pipeline(file_path, filename):
-    df = pd.read_csv(file_path)
+    df = load_dataframe(file_path)
 
     workflow_log = [
         f"File '{filename}' successfully loaded.",
@@ -517,7 +540,8 @@ def run_full_pipeline(file_path, filename):
     ai_summary_text = generate_ai_insights(df)
 
     table_html = df.head(10).to_html(classes="table table-dark table-striped", index=False)
-    processed_filename = f"processed_{secure_filename(filename)}"
+    name, ext = os.path.splitext(secure_filename(filename))
+    processed_filename = f"processed_{name}.csv"
 
     os.makedirs("uploads", exist_ok=True)
     processed_path = os.path.join("uploads", processed_filename)
@@ -591,7 +615,7 @@ def download_pdf(filename):
         return redirect(url_for("app_blueprint.upload_page"))
 
     # 🔹 Load dataset
-    df = pd.read_csv(file_path)
+    df = load_dataframe(file_path)
     dataset_summary, ai_summary = build_ai_summary(df)
 
     # 🔹 AI narrative (TinyLlama / fallback)
@@ -674,20 +698,26 @@ def download_pdf(filename):
     # ------------------- WEIGHTED STATS -------------------
     story.append(Paragraph("📈 Weighted Statistics", styles["Heading2"]))
     stats_data = [[k, f"{v:.2f}"] for k, v in weighted_stats.items()]
-    stats_table = Table([["Metric", "Value"]] + stats_data)
-    stats_table.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), colors.darkblue),
-        ("TEXTCOLOR", (0, 0), (-1, 0), colors.whitesmoke),
-        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-        ("GRID", (0, 0), (-1, -1), 0.5, colors.black),
-    ]))
-    story.append(stats_table)
+    if stats_data:
+        stats_table = Table([["Metric", "Value"]] + stats_data)
+        stats_table.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), colors.darkblue),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.whitesmoke),
+            ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+            ("GRID", (0, 0), (-1, -1), 0.5, colors.black),
+        ]))
+        story.append(stats_table)
+    else:
+        story.append(Paragraph("No numeric columns available in the dataset for statistics.", styles["Normal"]))
     story.append(PageBreak())
 
     # ------------------- VISUALIZATIONS -------------------
     numeric_cols = df.select_dtypes(include="number").columns
+    categorical_cols = df.select_dtypes(exclude="number").columns
+    
+    story.append(Paragraph("📊 Visual Diagnostics", styles["Heading2"]))
+
     if len(numeric_cols) > 0:
-        story.append(Paragraph("📊 Visual Diagnostics", styles["Heading2"]))
 
         # Histogram
         plt.figure(figsize=(8, 6))
@@ -725,6 +755,21 @@ def download_pdf(filename):
         story.append(Paragraph("Correlation Heatmap", styles["Heading3"]))
         story.append(Image(heatmap_path, width=400, height=300))
         story.append(Spacer(1, 15))
+        story.append(PageBreak())
+    elif len(categorical_cols) > 0:
+        for cat_col in categorical_cols[:2]:
+            plt.figure(figsize=(8, 6))
+            df[cat_col].value_counts().head(10).plot(kind='bar', color='skyblue')
+            plt.title(f"Top Values in {cat_col}")
+            plt.xticks(rotation=45, ha='right')
+            plt.tight_layout()
+            bar_path = os.path.join(plots_dir, f"{filename}_{cat_col}_bar.png")
+            plt.savefig(bar_path)
+            plt.close()
+
+            story.append(Paragraph(f"Distribution of {cat_col}", styles["Heading3"]))
+            story.append(Image(bar_path, width=400, height=300))
+            story.append(Spacer(1, 15))
         story.append(PageBreak())
 
     # ------------------- BUILD PDF -------------------
