@@ -14,6 +14,10 @@ class User(db.Model, UserMixin):
     upload_count = db.Column(db.Integer, nullable=False, default=0)  # ✅ Added for leaderboard
 
     @property
+    def prettier_budget(self):
+        return f"{self.score} pts"
+
+    @property
     def password(self):
         raise AttributeError("Password is write-only.")
     

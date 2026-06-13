@@ -1,6 +1,6 @@
 # AI-Powered Data Analysis & Visualization Platform
 
-End-to-end AI platform that automates data ingestion, preprocessing, analysis, model evaluation, and visualization to deliver actionable insights with minimal manual effort. Designed to help teams quickly move from raw data to decision-ready insights.
+End to end AI platform that automates data ingestion, preprocessing, analysis, model evaluation, and visualization to deliver actionable insights with minimal manual effort. Designed to help teams quickly move from raw data to decision ready insights.
 
 ---
 
@@ -11,15 +11,16 @@ End-to-end AI platform that automates data ingestion, preprocessing, analysis, m
 | **Ingestion** | Seamless upload of CSV and Excel (`.xlsx`, `.xls`) files. |
 | **Preprocessing** | Smart data cleaning, missing value handling, and outlier detection. |
 | **EDA & Visuals** | Automated Exploratory Data Analysis (EDA) with interactive Plotly visualizations. |
-| **AI Insights** | Automated narrative generation summarizing dataset anomalies, distributions, and correlations. |
-| **Modeling** | Baseline model training and evaluation using Scikit-Learn pipelines. |
+| **Advanced Analytics** | Feature engineering, hypothesis testing (A/B testing, ANOVA, Chi-Square), and time series forecasting. |
+| **Machine Learning** | Baseline model training (Regression, Classification) using Scikit-Learn pipelines. |
+| **Business Case Studies** | Interactive, simulated case studies (Customer Churn, RFM Segmentation, Sales Forecasting, Price Elasticity) to demonstrate real-world business impact. |
 | **Export & Reports** | Downloadable comprehensive PDF reports (powered by ReportLab) and clean CSV datasets. |
 
 ---
 
 ##  System Architecture
 
-The platform follows a robust Client-Server architecture, separating the interactive web frontend from the heavy data-processing backend.
+The platform follows a robust Client Server architecture, separating the interactive web frontend from the heavy data-processing backend.
 
 ```mermaid
 graph LR
@@ -31,7 +32,7 @@ graph LR
     UI[Frontend UI<br/>HTML/CSS/JS & Plotly]:::frontend <--> API[Flask Backend API<br/>App Router]:::backend
     API <--> DB[(SQLite DB<br/>Auth & State)]:::data
     API <--> Core[Data Engine<br/>Pandas & NumPy]:::data
-    API <--> ML[AI & ML Engine<br/>Scikit-Learn / LLMs]:::data
+    API <--> ML[AI & ML Engine<br/>Scikit-Learn / Statsmodels]:::data
     Core --> Reports[PDF Generator<br/>ReportLab]:::file
     Core --> Storage[Local File System<br/>Processed CSVs/Plots]:::file
 ```
@@ -73,17 +74,18 @@ graph TD
 | :--- | :--- | :--- |
 | **Backend Framework** | `Flask` | API routing, session management, and server logic |
 | **Data Engine** | `Pandas` / `NumPy` | DataFrame manipulation, CSV/Excel reading, aggregation |
-| **Machine Learning** | `Scikit-Learn` | Baseline model training, statistical metrics |
+| **Machine Learning** | `Scikit-Learn` | Classification, regression, and clustering algorithms |
+| **Statistical Modeling** | `Statsmodels` / `SciPy` | Hypothesis testing, A/B testing, and time-series forecasting |
 | **Data Visualization** | `Plotly` / `Matplotlib` | Interactive web charts and static plots for PDF reports |
 | **Report Generation** | `ReportLab` | Creating robust, styled A4 PDF documents dynamically |
-| **Frontend Styling** | `Bootstrap` / `AOS` | Responsive, animated user interface |
+| **Frontend Styling** | `Bootstrap` / `jQuery` | Responsive layout and asynchronous AJAX interactions |
 
 ---
 
 ##  Project Structure
 
 ```text
-AI-Powered-Data-Analysis-Platform/
+AI Powered Data Analysis Platform/
 │
 ├── README.md                 # Project Documentation
 ├── run.py                    # Application Entry Point
@@ -102,7 +104,10 @@ AI-Powered-Data-Analysis-Platform/
 │   │   ├── upload.html       # File upload page
 │   │   ├── result.html       # Automated insights dashboard
 │   │   ├── visualize.html    # Interactive Plotly UI
-│   │   └── configure.html    # Preprocessing configuration
+│   │   ├── configure.html    # Preprocessing configuration
+│   │   ├── analytics.html    # Advanced Analytics Studio
+│   │   ├── case_studies.html # Business Case Studies directory
+│   │   └── case_study_detail.html # Interactive case study simulations
 │   └── uploads/              # Raw user uploads directory
 │
 ├── instance/                 # SQLite Database storage
@@ -125,6 +130,7 @@ AI-Powered-Data-Analysis-Platform/
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/keshavmishra27/AI-Powered-Data-Analysis-and-Visualization-Platform-with-Automated-Insights.git
+   
    cd AI-Powered-Data-Analysis-and-Visualization-Platform-with-Automated-Insights
    ```
 

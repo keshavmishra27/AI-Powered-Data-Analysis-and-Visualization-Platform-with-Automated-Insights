@@ -1,0 +1,296 @@
+/* Apple Design System Override */
+
+:root {
+    /* Colors */
+    --primary: #0066cc;
+    --primary-focus: #0071e3;
+    --primary-on-dark: #2997ff;
+    --ink: #1d1d1f;
+    --body: #1d1d1f;
+    --body-on-dark: #ffffff;
+    --body-muted: #cccccc;
+    --ink-muted-80: #333333;
+    --ink-muted-48: #7a7a7a;
+    --divider-soft: #f0f0f0;
+    --hairline: #e0e0e0;
+    --canvas: #ffffff;
+    --canvas-parchment: #f5f5f7;
+    --surface-pearl: #fafafc;
+    --surface-tile-1: #272729;
+    --surface-tile-2: #2a2a2c;
+    --surface-tile-3: #252527;
+    --surface-black: #000000;
+    --surface-chip-translucent: rgba(210, 210, 215, 0.64);
+    --on-primary: #ffffff;
+    --on-dark: #ffffff;
+
+    /* Typography */
+    --font-display: "SF Pro Display", system-ui, -apple-system, "Inter", sans-serif;
+    --font-body: "SF Pro Text", system-ui, -apple-system, "Inter", sans-serif;
+}
+
+/* Base Adjustments */
+body {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.47;
+    letter-spacing: -0.374px;
+    color: var(--ink);
+    background-color: var(--canvas-parchment);
+}
+
+/* Typography Classes */
+.hero-display {
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 1.07;
+    letter-spacing: -0.28px;
+}
+
+.display-lg {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: 0;
+}
+
+.display-md {
+    font-family: var(--font-body);
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1.47;
+    letter-spacing: -0.374px;
+}
+
+.lead {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.14;
+    letter-spacing: 0.196px;
+}
+
+.lead-airy {
+    font-family: var(--font-body);
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0;
+}
+
+.tagline {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.19;
+    letter-spacing: 0.231px;
+}
+
+.body-strong {
+    font-weight: 600;
+}
+
+.caption {
+    font-size: 14px;
+    line-height: 1.43;
+    letter-spacing: -0.224px;
+}
+
+.button-utility {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.29;
+    letter-spacing: -0.224px;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--surface-black) !important;
+    min-height: 44px;
+}
+
+.navbar .navbar-brand {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.12px;
+    color: var(--body-on-dark) !important;
+}
+
+.navbar .nav-link {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: -0.12px;
+    color: var(--body-muted) !important;
+    transition: color 0.3s;
+}
+
+.navbar .nav-link:hover {
+    color: var(--body-on-dark) !important;
+}
+
+/* Buttons Override */
+.btn {
+    transition: transform 0.15s ease-out;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn-primary {
+    background-color: var(--primary) !important;
+    color: var(--on-primary) !important;
+    border: none !important;
+    border-radius: 9999px !important;
+    padding: 11px 22px !important;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 17px;
+    box-shadow: none !important;
+}
+
+.btn-primary:focus {
+    outline: 2px solid var(--primary-focus) !important;
+    box-shadow: none !important;
+}
+
+.btn-secondary {
+    background-color: var(--canvas) !important;
+    color: var(--primary) !important;
+    border: 1px solid var(--primary) !important;
+    border-radius: 9999px !important;
+    padding: 11px 22px !important;
+    box-shadow: none !important;
+}
+
+/* Cards & Surface Tiles Overrides */
+.bg-dark {
+    background-color: var(--surface-tile-1) !important;
+    color: var(--on-dark) !important;
+}
+
+.bg-dark h1, .bg-dark h2, .bg-dark h3, .bg-dark h4, .bg-dark h5, .bg-dark h6 {
+    color: var(--on-dark);
+}
+
+.bg-light {
+    background-color: var(--canvas) !important;
+    color: var(--ink) !important;
+}
+
+.card {
+    background-color: var(--canvas);
+    color: var(--ink);
+    border: 1px solid var(--hairline);
+    border-radius: 18px;
+    box-shadow: none !important; /* Apple rarely uses shadow on cards */
+}
+
+.card.bg-dark {
+    background-color: var(--surface-tile-1) !important;
+    color: var(--on-dark) !important;
+    border: none;
+}
+
+/* Links */
+a {
+    color: var(--primary);
+}
+
+.bg-dark a {
+    color: var(--primary-on-dark);
+}
+
+/* Specific component emulation */
+.store-utility-card {
+    background-color: var(--canvas);
+    color: var(--ink);
+    border: 1px solid var(--hairline);
+    border-radius: 18px;
+    padding: 24px;
+}
+
+/* Product Tiles (Alternating bands) */
+.product-tile-light {
+    background-color: var(--canvas);
+    color: var(--ink);
+    padding: 80px 20px;
+    border-radius: 0;
+    width: 100%;
+}
+
+.product-tile-parchment {
+    background-color: var(--canvas-parchment);
+    color: var(--ink);
+    padding: 80px 20px;
+    border-radius: 0;
+    width: 100%;
+}
+
+.product-tile-dark {
+    background-color: var(--surface-tile-1);
+    color: var(--on-dark);
+    padding: 80px 20px;
+    border-radius: 0;
+    width: 100%;
+}
+
+/* Clean up Bootstrap inputs */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid var(--hairline);
+    font-family: var(--font-body);
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.25);
+    border-color: var(--primary-focus);
+}
+
+/* Override neon text gradients */
+.text-gradient {
+    background: none !important;
+    -webkit-text-fill-color: var(--ink) !important;
+    color: var(--ink) !important;
+}
+
+.bg-dark .text-gradient, .bg-dark .text-light, .text-light-50 {
+    -webkit-text-fill-color: var(--on-dark) !important;
+    color: var(--on-dark) !important;
+}
+
+.text-light-50 {
+    opacity: 0.8;
+}
+
+/* Neutralize outline buttons to Action Blue */
+.btn-outline-danger, .btn-outline-purple, .btn-outline-success, .btn-outline-warning, .btn-outline-info {
+    color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    border-radius: 9999px !important;
+    font-family: var(--font-body) !important;
+    background-color: transparent !important;
+}
+
+.btn-outline-danger:hover, .btn-outline-purple:hover, .btn-outline-success:hover, .btn-outline-warning:hover, .btn-outline-info:hover {
+    background-color: var(--primary) !important;
+    color: var(--on-primary) !important;
+}
+
+/* Drop shadow reserved for floating imagery only */
+.apple-product-shadow {
+    box-shadow: rgba(0, 0, 0, 0.22) 3px 5px 30px 0;
+}
+
+/* Apple Color Utility Overrides */
+.text-primary { color: var(--primary) !important; }
+.text-success { color: #34c759 !important; }
+.text-danger { color: #ff3b30 !important; }
+.text-warning { color: #ff9500 !important; }
+.text-info { color: #32ade6 !important; }

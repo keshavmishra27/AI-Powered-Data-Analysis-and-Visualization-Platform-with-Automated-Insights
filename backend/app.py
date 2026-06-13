@@ -33,6 +33,15 @@ from reportlab.lib import colors
 import os
 from langchain_ollama import OllamaLLM
 
+from backend.analytics_engine import (
+    generate_churn_data, generate_rfm_data, generate_sales_data, generate_price_data,
+    apply_feature_engineering, run_regression_modeling, run_classification_modeling,
+    run_hypothesis_testing, run_timeseries_forecasting, run_ab_test_proportions,
+    run_ab_test_means, plotly_utils_encoder
+)
+import plotly.graph_objects as go
+
+
 # ----------------- Config -----------------
 app_blueprint = Blueprint('app_blueprint', __name__)
 PROCESSED_FOLDER = "processed"
@@ -772,9 +781,572 @@ def download_pdf(filename):
             story.append(Spacer(1, 15))
         story.append(PageBreak())
 
+
     # ------------------- BUILD PDF -------------------
     doc.build(story)
     return send_file(pdf_path, as_attachment=True)
+
+
+# ----------------- Advanced Analytics routes -----------------
+
+@app_blueprint.route('/analytics', methods=['GET'])
+@login_required
+def analytics_page():
+    active_dataset = session.get('active_dataset')
+    
+    upload_folder = current_app.config["UPLOAD_FOLDER"]
+    uploaded_files = []
+    if os.path.exists(upload_folder):
+        uploaded_files = [f for f in os.listdir(upload_folder) if f.lower().endswith(('.csv', '.xlsx', '.xls'))]
+        
+    return render_template(
+        'analytics.html',
+        uploaded_files=uploaded_files,
+        active_dataset=active_dataset
+    )
+
+@app_blueprint.route('/analytics/load-case-study', methods=['POST'])
+@login_required
+def load_case_study_data():
+    study = request.form.get('study')
+    upload_folder = current_app.config["UPLOAD_FOLDER"]
+    
+    if study == 'churn':
+        df = generate_churn_data()
+        filename = 'churn.csv'
+    elif study == 'rfm':
+        df = generate_rfm_data()
+        filename = 'rfm.csv'
+    elif study == 'sales':
+        df = generate_sales_data()
+        filename = 'sales.csv'
+    elif study == 'price':
+        df = generate_price_data()
+        filename = 'price.csv'
+    else:
+        return {"error": "Invalid case study dataset selected."}, 400
+        
+    file_path = os.path.join(upload_folder, filename)
+    df.to_csv(file_path, index=False)
+    session['active_dataset'] = filename
+    
+    return {"filename": filename}
+
+@app_blueprint.route('/analytics/metadata', methods=['GET'])
+@login_required
+def analytics_metadata():
+    filename = request.args.get('filename')
+    if not filename:
+        return {"error": "No filename specified."}, 400
+        
+    upload_folder = current_app.config["UPLOAD_FOLDER"]
+    file_path = os.path.join(upload_folder, filename)
+    if not os.path.exists(file_path):
+        return {"error": f"File '{filename}' not found."}, 404
+        
+    try:
+        df = load_dataframe(file_path)
+    except Exception as e:
+        return {"error": f"Failed to load dataset: {str(e)}"}, 500
+        
+    cols = df.columns.tolist()
+    numeric_cols = df.select_dtypes(include='number').columns.tolist()
+    categorical_cols = df.select_dtypes(exclude='number').columns.tolist()
+    
+    return {
+        "filename": filename,
+        "shape": list(df.shape),
+        "columns": cols,
+        "numeric_columns": numeric_cols,
+        "categorical_columns": categorical_cols
+    }
+
+@app_blueprint.route('/analytics/feature-engineering', methods=['POST'])
+@login_required
+def run_feature_engineering_api():
+    active_dataset = session.get('active_dataset')
+    if not active_dataset:
+        return {"error": "No active dataset loaded in session."}, 400
+        
+    upload_folder = current_app.config["UPLOAD_FOLDER"]
+    file_path = os.path.join(upload_folder, active_dataset)
+    if not os.path.exists(file_path):
+        return {"error": "Dataset file not found."}, 404
+        
+    action = request.form.get('action')
+    
+    # Extract request params
+    step = {'type': action}
+    if action == 'scale':
+        step['columns'] = request.form.getlist('columns[]')
+        step['method'] = request.form.get('method', 'standard')
+    elif action == 'encode':
+        step['columns'] = request.form.getlist('columns[]')
+        step['method'] = request.form.get('method', 'onehot')
+    elif action == 'datetime':
+        step['column'] = request.form.get('column')
+        step['extract'] = request.form.getlist('extracts[]')
+    elif action == 'interaction':
+        step['col1'] = request.form.get('col1')
+        step['col2'] = request.form.get('col2')
+    elif action == 'poly':
+        step['columns'] = request.form.getlist('columns[]')
+        step['degree'] = int(request.form.get('degree', 2))
+        
+    try:
+        df = load_dataframe(file_path)
+        df_engineered, logs = apply_feature_engineering(df, [step])
+        
+        # Save to engineered file and update session dataset
+        if not active_dataset.startswith('engineered_'):
+            new_filename = f"engineered_{active_dataset}"
+        else:
+            new_filename = active_dataset
+            
+        new_file_path = os.path.join(upload_folder, new_filename)
+        df_engineered.to_csv(new_file_path, index=False)
+        session['active_dataset'] = new_filename
+        
+    except Exception as e:
+        return {"error": f"Failed to apply feature engineering: {str(e)}"}, 500
+        
+    return {"logs": logs, "filename": new_filename}
+
+@app_blueprint.route('/analytics/model-fit', methods=['POST'])
+@login_required
+def run_model_fit_api():
+    active_dataset = session.get('active_dataset')
+    if not active_dataset:
+        return {"error": "No active dataset loaded in session."}, 400
+        
+    upload_folder = current_app.config["UPLOAD_FOLDER"]
+    file_path = os.path.join(upload_folder, active_dataset)
+    if not os.path.exists(file_path):
+        return {"error": "Dataset file not found."}, 404
+        
+    domain = request.form.get('domain')
+    algo = request.form.get('algo')
+    target = request.form.get('target')
+    predictors = request.form.getlist('predictors[]')
+    
+    try:
+        df = load_dataframe(file_path)
+        if domain == 'regression':
+            res = run_regression_modeling(df, target, predictors, model_type=algo)
+        else:
+            res = run_classification_modeling(df, target, predictors, model_type=algo)
+    except Exception as e:
+        return {"error": f"Failed to train statistical model: {str(e)}"}, 500
+        
+    return res
+
+@app_blueprint.route('/analytics/model-hypothesis', methods=['POST'])
+@login_required
+def run_model_hypothesis_api():
+    active_dataset = session.get('active_dataset')
+    if not active_dataset:
+        return {"error": "No active dataset loaded in session."}, 400
+        
+    upload_folder = current_app.config["UPLOAD_FOLDER"]
+    file_path = os.path.join(upload_folder, active_dataset)
+    if not os.path.exists(file_path):
+        return {"error": "Dataset file not found."}, 404
+        
+    test_type = request.form.get('test_type')
+    col1 = request.form.get('col1')
+    col2 = request.form.get('col2')
+    
+    try:
+        df = load_dataframe(file_path)
+        res = run_hypothesis_testing(df, test_type, col1, col2)
+    except Exception as e:
+        return {"error": f"Failed to run hypothesis test: {str(e)}"}, 500
+        
+    return res
+
+@app_blueprint.route('/analytics/forecast', methods=['POST'])
+@login_required
+def run_forecast_api():
+    active_dataset = session.get('active_dataset')
+    if not active_dataset:
+        return {"error": "No active dataset loaded in session."}, 400
+        
+    upload_folder = current_app.config["UPLOAD_FOLDER"]
+    file_path = os.path.join(upload_folder, active_dataset)
+    if not os.path.exists(file_path):
+        return {"error": "Dataset file not found."}, 404
+        
+    date_col = request.form.get('date_col')
+    target_col = request.form.get('target_col')
+    horizon = int(request.form.get('horizon', 30))
+    model = request.form.get('model', 'holt_linear')
+    
+    try:
+        df = load_dataframe(file_path)
+        res = run_timeseries_forecasting(df, date_col, target_col, model_type=model, horizon=horizon)
+    except Exception as e:
+        return {"error": f"Failed to run forecasting model: {str(e)}"}, 500
+        
+    return res
+
+@app_blueprint.route('/analytics/ab-calc', methods=['POST'])
+@login_required
+def run_ab_calc_api():
+    conv_a = int(request.form.get('conv_a'))
+    size_a = int(request.form.get('size_a'))
+    conv_b = int(request.form.get('conv_b'))
+    size_b = int(request.form.get('size_b'))
+    conf_level = float(request.form.get('conf_level', 0.95))
+    
+    try:
+        res = run_ab_test_proportions(conv_a, size_a, conv_b, size_b, conf_level=conf_level)
+    except Exception as e:
+        return {"error": f"Failed to calculate A/B test: {str(e)}"}, 500
+        
+    return res
+
+@app_blueprint.route('/analytics/ab-dataset', methods=['POST'])
+@login_required
+def run_ab_dataset_api():
+    active_dataset = session.get('active_dataset')
+    if not active_dataset:
+        return {"error": "No active dataset loaded in session."}, 400
+        
+    upload_folder = current_app.config["UPLOAD_FOLDER"]
+    file_path = os.path.join(upload_folder, active_dataset)
+    if not os.path.exists(file_path):
+        return {"error": "Dataset file not found."}, 404
+        
+    group_col = request.form.get('group_col')
+    metric_col = request.form.get('metric_col')
+    conf_level = float(request.form.get('conf_level', 0.95))
+    
+    try:
+        df = load_dataframe(file_path)
+        
+        # Determine continuous vs proportion automatically
+        unique_vals = df[metric_col].dropna().unique()
+        is_binary = len(unique_vals) <= 2 and set(unique_vals).issubset({0, 1, 0.0, 1.0, True, False, '0', '1'})
+        
+        groups = df[group_col].dropna().unique()
+        if len(groups) != 2:
+            return {"error": f"Grouping column '{group_col}' must contain exactly 2 unique values. Found: {list(groups)}"}, 400
+            
+        if is_binary:
+            # Conversion rate proportion
+            df[metric_col] = df[metric_col].astype(int)
+            conv_a = int(df[df[group_col] == groups[0]][metric_col].sum())
+            size_a = int(df[df[group_col] == groups[0]][metric_col].count())
+            conv_b = int(df[df[group_col] == groups[1]][metric_col].sum())
+            size_b = int(df[df[group_col] == groups[1]][metric_col].count())
+            res = run_ab_test_proportions(conv_a, size_a, conv_b, size_b, conf_level=conf_level)
+            res['group_a_name'] = str(groups[0])
+            res['group_b_name'] = str(groups[1])
+        else:
+            # Mean continuous comparison
+            res = run_ab_test_means(df, group_col, metric_col, conf_level=conf_level)
+            
+    except Exception as e:
+        return {"error": f"Failed to run A/B dataset test: {str(e)}"}, 500
+        
+    return res
+
+# ----------------- Business Case Studies routes -----------------
+
+@app_blueprint.route('/case-studies', methods=['GET'])
+@login_required
+def case_studies_page():
+    return render_template('case_studies.html')
+
+@app_blueprint.route('/case-studies/<study_id>', methods=['GET'])
+@login_required
+def case_study_detail(study_id):
+    studies = {
+        "churn": {
+            "title": "Telecom Customer Churn",
+            "desc": "Predict customer attrition for a telecom provider. Optimize retention campaigns by evaluating the financial trade-off between customer incentives and churn loss.",
+            "icon_class": "fa-users-slash",
+            "icon_color": "#ff6b6b",
+            "icon_bg": "rgba(255, 107, 107, 0.15)"
+        },
+        "rfm": {
+            "title": "E-Commerce RFM Segmentation",
+            "desc": "Segment customers based on Recency, Frequency, and Monetary metrics using unsupervised clustering. Build targeted profiles for marketing campaigns.",
+            "icon_class": "fa-people-group",
+            "icon_color": "#e100ff",
+            "icon_bg": "rgba(127, 0, 255, 0.15)"
+        },
+        "sales": {
+            "title": "Retail Sales Forecasting",
+            "desc": "Forecast future grocery supermarket sales using daily time series. Factor in promotional discounts, weather effects, and holiday cycles to optimize supply chains.",
+            "icon_class": "fa-chart-line",
+            "icon_color": "#38ef7d",
+            "icon_bg": "rgba(17, 153, 142, 0.15)"
+        },
+        "price": {
+            "title": "SaaS Price Elasticity",
+            "desc": "Model the relationship between pricing and consumer demand. Find the price elasticity of demand and run simulations to calculate the optimal price point that maximizes revenue.",
+            "icon_class": "fa-money-bill-trend-up",
+            "icon_color": "#f2c94c",
+            "icon_bg": "rgba(242, 153, 74, 0.15)"
+        }
+    }
+    
+    if study_id not in studies:
+        flash("Invalid Case Study ID.", "danger")
+        return redirect(url_for('app_blueprint.case_studies_page'))
+        
+    study = studies[study_id]
+    return render_template(
+        'case_study_detail.html',
+        study_id=study_id,
+        study_title=study.get('title'),
+        study_desc=study.get('desc'),
+        icon_class=study.get('icon_class'),
+        icon_color=study.get('icon_color'),
+        icon_bg=study.get('icon_bg')
+    )
+
+@app_blueprint.route('/case-studies/simulate', methods=['POST'])
+@login_required
+def case_study_simulate():
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.metrics import confusion_matrix
+    from sklearn.preprocessing import StandardScaler
+    
+    study_id = request.form.get('study_id')
+    
+    if study_id == 'churn':
+        threshold = float(request.form.get('threshold', 0.5))
+        incentive_cost = float(request.form.get('incentive_cost', 20.0))
+        retention_rate = float(request.form.get('retention_rate', 50.0)) / 100.0
+        clv = float(request.form.get('clv', 200.0))
+        
+        df = generate_churn_data()
+        
+        # Train simple model
+        predictors = ['Tenure', 'MonthlyCharges', 'TotalCharges', 'Contract', 'InternetService']
+        df_encoded = pd.get_dummies(df[predictors + ['Churn']], columns=['Contract', 'InternetService'], drop_first=True)
+        X = df_encoded.drop('Churn', axis=1)
+        y = (df_encoded['Churn'] == 'Yes').astype(int)
+        
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X, y)
+        probs = model.predict_proba(X)[:, 1]
+        
+        preds = (probs >= threshold).astype(int)
+        
+        cm = confusion_matrix(y, preds)
+        tn, fp, fn, tp = cm.ravel()
+        
+        actual_churners = int(y.sum())
+        cost_no_ai = actual_churners * clv
+        
+        flagged = int(preds.sum())
+        # Cost with AI = flagged * cost + unsaved churners * CLV
+        cost_ai = (flagged * incentive_cost) + (tp * (1.0 - retention_rate) + fn) * clv
+        savings = cost_no_ai - cost_ai
+        
+        fig_cm = px.imshow(
+            cm, text_auto=True,
+            x=['No Churn', 'Churn'], y=['No Churn', 'Churn'],
+            labels=dict(x="Predicted", y="Actual"),
+            title="Confusion Matrix",
+            template="plotly_dark",
+            color_continuous_scale="Reds"
+        )
+        cm_chart_json = json.dumps(fig_cm, cls=plotly_utils_encoder())
+        
+        fig_cost = go.Figure(data=[
+            go.Bar(
+                x=['No Intervention', 'AI Targeted Intervention'],
+                y=[cost_no_ai, cost_ai],
+                marker_color=['#ff6b6b', '#38ef7d'],
+                text=[f"${cost_no_ai:,.0f}", f"${cost_ai:,.0f}"],
+                textposition='auto'
+            )
+        ])
+        fig_cost.update_layout(
+            title="Policy Cost Comparison ($)",
+            template="plotly_dark",
+            yaxis_title="Total Policy Cost ($)"
+        )
+        cost_chart_json = json.dumps(fig_cost, cls=plotly_utils_encoder())
+        
+        rec = (
+            f"At a decision threshold of <b>{threshold:.2f}</b>, the classifier flags <b>{flagged}</b> customers "
+            f"({(flagged/len(y)*100):.1f}% of base) at risk of churn. "
+        )
+        if savings > 0:
+            rec += f"This strategy will save the organization approximately <b>${savings:,.2f}</b> compared to doing nothing. "
+            rec += f"Recommendation: deploy the retention campaign to the flagged group immediately."
+        else:
+            rec += f"Due to high incentive cost relative to customer value, this threshold leads to a net loss of <b>${-savings:,.2f}</b>. "
+            rec += "Recommendation: increase the probability threshold to target only the highest-risk customers or reduce offer costs."
+            
+        return {
+            "cost_no_ai": cost_no_ai,
+            "cost_ai": cost_ai,
+            "savings": savings,
+            "cm_chart": cm_chart_json,
+            "cost_chart": cost_chart_json,
+            "recommendation": rec
+        }
+        
+    elif study_id == 'rfm':
+        k = int(request.form.get('k', 4))
+        df = generate_rfm_data()
+        
+        max_date = df['InvoiceDate'].max() + pd.Timedelta(days=1)
+        rfm = df.groupby('CustomerID').agg({
+            'InvoiceDate': lambda x: (max_date - x.max()).days,
+            'InvoiceNo': 'count',
+            'TotalValue': 'sum'
+        }).reset_index()
+        rfm.columns = ['CustomerID', 'Recency', 'Frequency', 'Monetary']
+        
+        scaler = StandardScaler()
+        rfm_scaled = scaler.fit_transform(rfm[['Recency', 'Frequency', 'Monetary']])
+        
+        from sklearn.cluster import KMeans
+        kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+        rfm['Cluster'] = kmeans.fit_predict(rfm_scaled)
+        
+        cluster_colors = ['#ff6b6b', '#4ecdc4', '#e100ff', '#f2c94c', '#00ff88', '#00c6ff']
+        personas = {
+            0: ("Champions", "VIP loyalists; upsell premium lines and exclusive rewards", cluster_colors[0]),
+            1: ("At-Risk Customers", "Recent slowdown in purchases; offer win-back discount codes", cluster_colors[1]),
+            2: ("New Customers", "Recent purchase, low frequency; trigger onboarding sequence", cluster_colors[2]),
+            3: ("Hibernating", "No purchases in 6+ months; trigger automated re-engagement email", cluster_colors[3]),
+            4: ("Loyal Customers", "High frequency, moderate spend; offer loyalty program invite", cluster_colors[4]),
+            5: ("Big Spenders", "Very high monetary, low frequency; offer high-value tier promotions", cluster_colors[5])
+        }
+        
+        cluster_order = rfm.groupby('Cluster')['Monetary'].mean().sort_values(ascending=False).index.tolist()
+        
+        cluster_summaries = []
+        for rank, c_idx in enumerate(cluster_order):
+            c_data = rfm[rfm['Cluster'] == c_idx]
+            p_info = personas.get(rank, ("Segment " + str(rank), "Standard campaign", cluster_colors[rank % len(cluster_colors)]))
+            
+            cluster_summaries.append({
+                "cluster_id": c_idx,
+                "persona": p_info[0],
+                "size": len(c_data),
+                "pct": round(len(c_data) / len(rfm) * 100, 1),
+                "recency": float(c_data['Recency'].mean()),
+                "frequency": float(c_data['Frequency'].mean()),
+                "monetary": float(c_data['Monetary'].mean()),
+                "marketing": p_info[1],
+                "color": p_info[2]
+            })
+            
+        color_map = {c['cluster_id']: c['color'] for c in cluster_summaries}
+        rfm['Color'] = rfm['Cluster'].map(color_map)
+        rfm['Persona'] = rfm['Cluster'].map({c['cluster_id']: c['persona'] for c in cluster_summaries})
+        
+        fig = px.scatter(
+            rfm, x='Recency', y='Monetary', size='Frequency',
+            color='Persona', color_discrete_map={c['persona']: c['color'] for c in cluster_summaries},
+            title="Customer Segments Visualization (Size = Frequency)",
+            template="plotly_dark",
+            labels={'Recency': 'Recency (Days)', 'Monetary': 'Monetary Value ($)', 'Frequency': 'Frequency (Orders)'}
+        )
+        scatter_json = json.dumps(fig, cls=plotly_utils_encoder())
+        
+        return {
+            "scatter_chart": scatter_json,
+            "cluster_summaries": cluster_summaries
+        }
+        
+    elif study_id == 'sales':
+        model_type = request.form.get('model', 'regression')
+        horizon = int(request.form.get('horizon', 30))
+        promo_boost = float(request.form.get('promo_boost', 150.0))
+        
+        df = generate_sales_data()
+        df.loc[df['PromotionalDiscount'] == 1, 'Sales'] += promo_boost - 150.0
+        
+        res = run_timeseries_forecasting(df, 'Date', 'Sales', model_type=model_type, horizon=horizon)
+        if 'chart' in res:
+            res['forecast_chart'] = res.pop('chart')
+        
+        peaks = "Friday and Saturday"
+        insights = (
+            f"Strong weekly seasonality detected. Peak sales occur on {peaks}. "
+            f"The promotional discount boost of ${promo_boost:.2f} is projected to generate "
+            f"an incremental ${promo_boost * df['PromotionalDiscount'].sum() / len(df) * horizon:,.2f} "
+            f"in revenue over the {horizon}-day forecast period."
+        )
+        res['insights'] = insights
+        return res
+        
+    elif study_id == 'price':
+        price = float(request.form.get('price', 30.0))
+        comp_price = float(request.form.get('comp_price', 35.0))
+        mkt_spend = float(request.form.get('mkt_spend', 500.0))
+        
+        df = generate_price_data()
+        
+        X = df[['Price', 'CompetitorPrice', 'MarketingSpend']]
+        y = df['Demand']
+        
+        reg = LinearRegression()
+        reg.fit(X, y)
+        
+        b0 = reg.intercept_
+        b1, b2, b3 = reg.coef_
+        
+        simulated_demand = int(b0 + b1 * price + b2 * comp_price + b3 * mkt_spend)
+        simulated_demand = max(5, simulated_demand)
+        simulated_revenue = simulated_demand * price
+        
+        price_range = np.linspace(10, 80, 100)
+        demand_pred = b0 + b1 * price_range + b2 * comp_price + b3 * mkt_spend
+        demand_pred = np.clip(demand_pred, 5, None)
+        revenue_pred = price_range * demand_pred
+        
+        opt_idx = np.argmax(revenue_pred)
+        optimal_price = price_range[opt_idx]
+        max_revenue = revenue_pred[opt_idx]
+        
+        fig_demand = go.Figure()
+        fig_demand.add_trace(go.Scatter(x=df['Price'], y=df['Demand'], mode='markers', name='Historical Sales', marker_color='grey'))
+        fig_demand.add_trace(go.Scatter(x=price_range, y=demand_pred, mode='lines', name='Model Demand Curve', line_color='#ff8e53'))
+        fig_demand.add_trace(go.Scatter(x=[price], y=[simulated_demand], mode='markers', name='Your Price Point', marker=dict(color='yellow', size=12)))
+        fig_demand.update_layout(title="Demand Elasticity Curve", xaxis_title="Price ($)", yaxis_title="Demand (Units)", template="plotly_dark")
+        demand_json = json.dumps(fig_demand, cls=plotly_utils_encoder())
+        
+        fig_rev = go.Figure()
+        fig_rev.add_trace(go.Scatter(x=price_range, y=revenue_pred, mode='lines', name='Projected Revenue', line_color='#38ef7d'))
+        fig_rev.add_trace(go.Scatter(x=[price], y=[simulated_revenue], mode='markers', name='Your Revenue', marker=dict(color='yellow', size=12)))
+        fig_rev.add_trace(go.Scatter(x=[optimal_price], y=[max_revenue], mode='markers', name='Optimal Revenue', marker=dict(color='#ff007f', size=12, symbol='star')))
+        fig_rev.update_layout(title="Revenue Optimization Curve", xaxis_title="Price ($)", yaxis_title="Projected Revenue ($)", template="plotly_dark")
+        revenue_json = json.dumps(fig_rev, cls=plotly_utils_encoder())
+        
+        mean_p = df['Price'].mean()
+        mean_d = df['Demand'].mean()
+        elasticity_coef = b1 * (mean_p / mean_d)
+        
+        elasticity_type = "Elastic" if abs(elasticity_coef) > 1.0 else "Inelastic"
+        interpretation = (
+            f"The Price Elasticity of Demand is approximately {elasticity_coef:.2f} ({elasticity_type}). "
+            f"This indicates that a 10% increase in price leads to a {abs(elasticity_coef)*10:.1f}% "
+            f"decrease in quantity demanded. The revenue-maximizing optimal price point is predicted to be "
+            f"${optimal_price:.2f}, yielding ${max_revenue:,.2f} in projected revenue."
+        )
+        
+        return {
+            "projected_demand": simulated_demand,
+            "projected_revenue": simulated_revenue,
+            "optimal_price": float(optimal_price),
+            "demand_chart": demand_json,
+            "revenue_chart": revenue_json,
+            "elasticity_interpretation": interpretation
+        }
+        
+    return {"error": "Invalid study_id."}, 400
+
 
 
 

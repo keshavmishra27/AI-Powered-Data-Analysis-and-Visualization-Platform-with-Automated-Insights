@@ -1,15 +1,4 @@
-/* ---------- Animated Background ---------- */
-body {
-    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1a1a1a);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    color: #ffffff;
-}
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+/* ---------- Animated Background Removed for Apple Design ---------- */
 
 /* ---------- Loader ---------- */
 #page-loader {
