@@ -1,7 +1,7 @@
 import os
 import json
 import pandas as pd
-from flask import Blueprint, render_template, request, flash, url_for, redirect, send_file, current_app, session
+from flask import Blueprint, render_template, request, flash, url_for, redirect, send_file, current_app, session, jsonify
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 from backend.forms import LoginForm, RegisterForm
@@ -15,6 +15,7 @@ from backend.agents.data_preparation import run_data_preparation_agent
 from backend.agents.ml_engineer import run_ml_engineer_agent
 from backend.agents.reporting import run_reporting_agent
 from backend.exports.pipeline import generate_pipeline_json
+from backend.case_studies_engine import simulate_churn, simulate_rfm, simulate_sales, simulate_price_elasticity
 
 app_blueprint = Blueprint('app_blueprint', __name__)
 ALLOWED_EXTENSIONS = {"csv", "xlsx", "xls"}
@@ -239,7 +240,84 @@ def analytics_page():
 def case_studies_page():
     return render_template('case_studies.html')
 
-@app_blueprint.route('/case-studies/<study_id>')
+CASE_STUDIES_DATA = {
+    'churn': {
+        'title': 'Telecom Customer Churn',
+        'desc': 'Predict customer attrition for a telecom provider. Optimize retention campaigns by evaluating the financial trade-off between customer incentives and churn loss.',
+        'icon_class': 'fa-users-slash',
+        'icon_bg': 'rgba(255, 107, 107, 0.15)',
+        'icon_color': '#ff6b6b'
+    },
+    'rfm': {
+        'title': 'E-Commerce RFM Segmentation',
+        'desc': 'Segment customers based on Recency, Frequency, and Monetary metrics using unsupervised clustering. Build targeted profiles for marketing campaigns.',
+        'icon_class': 'fa-people-group',
+        'icon_bg': 'rgba(127, 0, 255, 0.15)',
+        'icon_color': '#e100ff'
+    },
+    'sales': {
+        'title': 'Retail Sales Forecasting',
+        'desc': 'Forecast future grocery supermarket sales using daily time series. Factor in promotional discounts, weather effects, and holiday cycles to optimize supply chains.',
+        'icon_class': 'fa-chart-line',
+        'icon_bg': 'rgba(17, 153, 142, 0.15)',
+        'icon_color': '#38ef7d'
+    },
+    'price': {
+        'title': 'SaaS Price Elasticity',
+        'desc': 'Model the relationship between pricing and consumer demand. Find the price elasticity of demand and run simulations to calculate the optimal price point that maximizes revenue.',
+        'icon_class': 'fa-money-bill-trend-up',
+        'icon_bg': 'rgba(242, 153, 74, 0.15)',
+        'icon_color': '#f2c94c'
+    }
+}
+
+@app_blueprint.route('/case-study/<study_id>')
 @login_required
 def case_study_detail(study_id):
-    return render_template('case_study_detail.html', study_id=study_id)
+    study_data = CASE_STUDIES_DATA.get(study_id, {})
+    return render_template('case_study_detail.html', 
+        study_id=study_id,
+        study_title=study_data.get('title', 'Unknown'),
+        study_desc=study_data.get('desc', ''),
+        icon_class=study_data.get('icon_class', 'fa-question'),
+        icon_bg=study_data.get('icon_bg', '#333'),
+        icon_color=study_data.get('icon_color', '#fff')
+    )
+
+@app_blueprint.route('/case-studies/simulate', methods=['POST'])
+@login_required
+def simulate_case_study():
+    try:
+        study_id = request.form.get('study_id')
+        if study_id == 'churn':
+            threshold = float(request.form.get('threshold', 0.5))
+            incentive_cost = float(request.form.get('incentive_cost', 20))
+            retention_rate = float(request.form.get('retention_rate', 50))
+            clv = float(request.form.get('clv', 200))
+            res = simulate_churn(threshold, incentive_cost, retention_rate, clv)
+            return jsonify(res)
+            
+        elif study_id == 'rfm':
+            k = int(request.form.get('k', 4))
+            res = simulate_rfm(k)
+            return jsonify(res)
+            
+        elif study_id == 'sales':
+            model_type = request.form.get('model', 'regression')
+            horizon = int(request.form.get('horizon', 30))
+            promo_boost = float(request.form.get('promo_boost', 150))
+            res = simulate_sales(model_type, horizon, promo_boost)
+            return jsonify(res)
+            
+        elif study_id == 'price':
+            price = float(request.form.get('price', 30))
+            comp_price = float(request.form.get('comp_price', 35))
+            mkt_spend = float(request.form.get('mkt_spend', 500))
+            res = simulate_price_elasticity(price, comp_price, mkt_spend)
+            return jsonify(res)
+            
+        else:
+            return jsonify({'error': 'Invalid study_id'}), 400
+            
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

@@ -6,7 +6,7 @@ Keshav Coding Market - Stathon 2025
 
 {% block head %}
 {{ super() }}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style>
     /* Main container */
     .main-container { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 20px; }
@@ -44,32 +44,37 @@ Keshav Coding Market - Stathon 2025
 
 
 <div class="main-container">
-<div class="hero">
-<h1 class="hero-display" id="main-title"> Stathon 2025 Project</h1>
-<p class="fade-in lead-airy">Transforming data into insights with style and innovation</p>
-<a class="btn btn-primary" href="{{ url_for('app_blueprint.upload_page') }}" id="get-started-btn">
-<i class="fas fa-rocket"></i> Get Started
+    <div class="hero">
+        <h1 id="main-title" class="hero-display"> Stathon 2025 Project</h1>
+        <p class="fade-in lead-airy">Transforming data into insights with style and innovation</p>
+
+        <a href="{{ url_for('app_blueprint.upload_page') }}" class="btn btn-primary" id="get-started-btn">
+            <i class="fas fa-rocket"></i> Get Started
         </a>
-<div class="progress-container fade-in">
-<div class="progress-bar">
-<div class="progress-fill"></div>
+
+        <div class="progress-container fade-in">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p class="caption" style="margin-top:10px;">Loading awesome features...</p>
+        </div>
+    </div>
+
+    <div class="features fade-in">
+        <div class="feature-card store-utility-card" data-feature="upload">
+            <div class="feature-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <h5 class="body-strong">Smart Upload</h5>
+            <p class="body">Drag, drop, and upload your files with intelligent processing and real-time validation.</p>
+        </div>
+
+        <div class="feature-card store-utility-card" data-feature="analyze">
+            <div class="feature-icon"><i class="fas fa-brain"></i></div>
+            <h5 class="body-strong">AI Analysis</h5>
+            <p class="body">Advanced algorithms transform your raw data into meaningful insights and visualizations.</p>
+        </div>
+    </div>
 </div>
-<p class="caption" style="margin-top:10px;">Loading awesome features...</p>
-</div>
-</div>
-<div class="features fade-in">
-<div class="feature-card store-utility-card" data-feature="upload">
-<div class="feature-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-<h5 class="body-strong">Smart Upload</h5>
-<p class="body">Drag, drop, and upload your files with intelligent processing and real time validation.</p>
-</div>
-<div class="feature-card store-utility-card" data-feature="analyze">
-<div class="feature-icon"><i class="fas fa-brain"></i></div>
-<h5 class="body-strong">AI Analysis</h5>
-<p class="body">Advanced algorithms transform your raw data into meaningful insights and visualizations.</p>
-</div>
-</div>
-</div>
+
 <button class="fab" id="fab-btn"><i class="fas fa-question"></i></button>
 {% endblock %}
 
@@ -198,6 +203,7 @@ Keshav Coding Market - Stathon 2025
         });
         document.querySelectorAll('.feature-card').forEach(card=>observer.observe(card));
     });
+
     // Keyboard shortcuts
     document.addEventListener('keydown',e=>{
         if(e.key===' '){ e.preventDefault(); document.getElementById('get-started-btn').click(); }

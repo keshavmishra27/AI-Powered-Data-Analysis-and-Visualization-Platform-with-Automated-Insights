@@ -2,116 +2,121 @@
 {% block title %}Business Analytics Case Studies{% endblock %}
 
 {% block content %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
 <div class="container my-5">
-<div class="text-center mb-5" data-aos="fade-down">
-<h1 class="text-gradient fw-bold display-4 mb-2"><i class="fa-solid fa-briefcase me-3"></i>Business Analytics Case Studies</h1>
-<p class="lead text-light-50">Interactive, production grade templates addressing critical real world business optimization problems.</p>
-</div>
-<!-- Case Studies Grid -->
-<div class="row">
-<!-- Case Study 1: Churn -->
-<div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-<div class="card bg-dark text-light h-100 border-secondary overflow-hidden tilt-card shadow-lg">
-<div class="card-header-gradient" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%); height: 10px;"></div>
-<div class="card-body p-4 d-flex flex-column">
-<div class="d-flex align-items-center mb-3">
-<div class="icon-circle me-3" style="background: rgba(255, 107, 107, 0.15); color: #ff6b6b;">
-<i class="fa-solid fa-users-slash fa-2x"></i>
-</div>
-<h4 class="card-title mb-0 fw-bold">Telecom Customer Churn</h4>
-</div>
-<p class="card-text text-muted flex-grow-1">
+    <div class="text-center mb-5" data-aos="fade-down">
+        <h1 class="text-gradient fw-bold display-4 mb-2"><i class="fa-solid fa-briefcase me-3"></i>Business Analytics Case Studies</h1>
+        <p class="lead text-light-50">Interactive, production-grade templates addressing critical real-world business optimization problems.</p>
+    </div>
+
+    <!-- Case Studies Grid -->
+    <div class="row">
+        <!-- Case Study 1: Churn -->
+        <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card bg-dark text-light h-100 border-secondary overflow-hidden tilt-card shadow-lg">
+                <div class="card-header-gradient" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%); height: 10px;"></div>
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="icon-circle me-3" style="background: rgba(255, 107, 107, 0.15); color: #ff6b6b;">
+                            <i class="fa-solid fa-users-slash fa-2x"></i>
+                        </div>
+                        <h4 class="card-title mb-0 fw-bold">Telecom Customer Churn</h4>
+                    </div>
+                    <p class="card-text text-muted flex-grow-1">
                         Predict customer attrition for a telecom provider. Optimize retention campaigns by evaluating the financial trade off between customer incentives and churn loss.
                     </p>
-<div class="mb-3">
-<span class="badge badge-outline-danger me-1">Logistic Regression</span>
-<span class="badge badge-outline-danger me-1">Random Forest</span>
-<span class="badge badge-outline-danger me-1">Decision Cost Benefit</span>
-</div>
-<a class="btn btn-outline-danger btn-block mt-3" href="{{ url_for('app_blueprint.case_study_detail', study_id='churn') }}">
-<i class="fa-solid fa-chart-line me-2"></i>Launch Interactive Dashboard
+                    <div class="mb-3">
+                        <span class="badge badge-outline-danger me-1">Logistic Regression</span>
+                        <span class="badge badge-outline-danger me-1">Random Forest</span>
+                        <span class="badge badge-outline-danger me-1">Decision Cost Benefit</span>
+                    </div>
+                    <a href="{{ url_for('app_blueprint.case_study_detail', study_id='churn') }}" class="btn btn-outline-danger btn-block mt-3">
+                        <i class="fa-solid fa-chart-line me-2"></i>Launch Interactive Dashboard
                     </a>
-</div>
-</div>
-</div>
-<!-- Case Study 2: RFM -->
-<div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-<div class="card bg-dark text-light h-100 border-secondary overflow-hidden tilt-card shadow-lg">
-<div class="card-header-gradient" style="background: linear-gradient(135deg, #7f00ff 0%, #e100ff 100%); height: 10px;"></div>
-<div class="card-body p-4 d-flex flex-column">
-<div class="d-flex align-items-center mb-3">
-<div class="icon-circle me-3" style="background: rgba(127, 0, 255, 0.15); color: #e100ff;">
-<i class="fa-solid fa-people-group fa-2x"></i>
-</div>
-<h4 class="card-title mb-0 fw-bold">E Commerce RFM Segmentation</h4>
-</div>
-<p class="card-text text-muted flex-grow-1">
+                </div>
+            </div>
+        </div>
+
+        <!-- Case Study 2: RFM -->
+        <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="card bg-dark text-light h-100 border-secondary overflow-hidden tilt-card shadow-lg">
+                <div class="card-header-gradient" style="background: linear-gradient(135deg, #7f00ff 0%, #e100ff 100%); height: 10px;"></div>
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="icon-circle me-3" style="background: rgba(127, 0, 255, 0.15); color: #e100ff;">
+                            <i class="fa-solid fa-people-group fa-2x"></i>
+                        </div>
+                        <h4 class="card-title mb-0 fw-bold">E Commerce RFM Segmentation</h4>
+                    </div>
+                    <p class="card-text text-muted flex-grow-1">
                         Segment customers based on Recency, Frequency, and Monetary metrics using unsupervised clustering. Build targeted profiles for marketing campaigns.
                     </p>
-<div class="mb-3">
-<span class="badge badge-outline-purple me-1">K Means Clustering</span>
-<span class="badge badge-outline-purple me-1">RFM Analysis</span>
-<span class="badge badge-outline-purple me-1">3D Scatter Plots</span>
-</div>
-<a class="btn btn-outline-purple btn-block mt-3" href="{{ url_for('app_blueprint.case_study_detail', study_id='rfm') }}">
-<i class="fa-solid fa-users me-2"></i>Launch Interactive Dashboard
+                    <div class="mb-3">
+                        <span class="badge badge-outline-purple me-1">K-Means Clustering</span>
+                        <span class="badge badge-outline-purple me-1">RFM Analysis</span>
+                        <span class="badge badge-outline-purple me-1">3D Scatter Plots</span>
+                    </div>
+                    <a href="{{ url_for('app_blueprint.case_study_detail', study_id='rfm') }}" class="btn btn-outline-purple btn-block mt-3">
+                        <i class="fa-solid fa-users me-2"></i>Launch Interactive Dashboard
                     </a>
-</div>
-</div>
-</div>
-<!-- Case Study 3: Forecasting -->
-<div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-<div class="card bg-dark text-light h-100 border-secondary overflow-hidden tilt-card shadow-lg">
-<div class="card-header-gradient" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); height: 10px;"></div>
-<div class="card-body p-4 d-flex flex-column">
-<div class="d-flex align-items-center mb-3">
-<div class="icon-circle me-3" style="background: rgba(17, 153, 142, 0.15); color: #38ef7d;">
-<i class="fa-solid fa-chart-line fa-2x"></i>
-</div>
-<h4 class="card-title mb-0 fw-bold">Retail Sales Forecasting</h4>
-</div>
-<p class="card-text text-muted flex-grow-1">
+                </div>
+            </div>
+        </div>
+
+        <!-- Case Study 3: Forecasting -->
+        <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="card bg-dark text-light h-100 border-secondary overflow-hidden tilt-card shadow-lg">
+                <div class="card-header-gradient" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); height: 10px;"></div>
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="icon-circle me-3" style="background: rgba(17, 153, 142, 0.15); color: #38ef7d;">
+                            <i class="fa-solid fa-chart-line fa-2x"></i>
+                        </div>
+                        <h4 class="card-title mb-0 fw-bold">Retail Sales Forecasting</h4>
+                    </div>
+                    <p class="card-text text-muted flex-grow-1">
                         Forecast future grocery supermarket sales using daily time series. Factor in promotional discounts, weather effects, and holiday cycles to optimize supply chains.
                     </p>
-<div class="mb-3">
-<span class="badge badge-outline-success me-1">Time Series Regression</span>
-<span class="badge badge-outline-success me-1">Seasonality Analysis</span>
-<span class="badge badge-outline-success me-1">Confidence Intervals</span>
-</div>
-<a class="btn btn-outline-success btn-block mt-3" href="{{ url_for('app_blueprint.case_study_detail', study_id='sales') }}">
-<i class="fa-solid fa-arrow-trend-up me-2"></i>Launch Interactive Dashboard
+                    <div class="mb-3">
+                        <span class="badge badge-outline-success me-1">Time Series Regression</span>
+                        <span class="badge badge-outline-success me-1">Seasonality Analysis</span>
+                        <span class="badge badge-outline-success me-1">Confidence Intervals</span>
+                    </div>
+                    <a href="{{ url_for('app_blueprint.case_study_detail', study_id='sales') }}" class="btn btn-outline-success btn-block mt-3">
+                        <i class="fa-solid fa-arrow-trend-up me-2"></i>Launch Interactive Dashboard
                     </a>
-</div>
-</div>
-</div>
-<!-- Case Study 4: Price Optimization -->
-<div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
-<div class="card bg-dark text-light h-100 border-secondary overflow-hidden tilt-card shadow-lg">
-<div class="card-header-gradient" style="background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%); height: 10px;"></div>
-<div class="card-body p-4 d-flex flex-column">
-<div class="d-flex align-items-center mb-3">
-<div class="icon-circle me-3" style="background: rgba(242, 153, 74, 0.15); color: #f2c94c;">
-<i class="fa-solid fa-money-bill-trend-up fa-2x"></i>
-</div>
-<h4 class="card-title mb-0 fw-bold">SaaS Price Elasticity</h4>
-</div>
-<p class="card-text text-muted flex-grow-1">
+                </div>
+            </div>
+        </div>
+
+        <!-- Case Study 4: Price Optimization -->
+        <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="card bg-dark text-light h-100 border-secondary overflow-hidden tilt-card shadow-lg">
+                <div class="card-header-gradient" style="background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%); height: 10px;"></div>
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="icon-circle me-3" style="background: rgba(242, 153, 74, 0.15); color: #f2c94c;">
+                            <i class="fa-solid fa-money-bill-trend-up fa-2x"></i>
+                        </div>
+                        <h4 class="card-title mb-0 fw-bold">SaaS Price Elasticity</h4>
+                    </div>
+                    <p class="card-text text-muted flex-grow-1">
                         Model the relationship between pricing and consumer demand. Find the price elasticity of demand and run simulations to calculate the optimal price point that maximizes revenue.
                     </p>
-<div class="mb-3">
-<span class="badge badge-outline-warning me-1">Demand Elasticity</span>
-<span class="badge badge-outline-warning me-1">Revenue Maximization</span>
-<span class="badge badge-outline-warning me-1">Demand Curve Fitting</span>
-</div>
-<a class="btn btn-outline-warning btn-block mt-3" href="{{ url_for('app_blueprint.case_study_detail', study_id='price') }}">
-<i class="fa-solid fa-hand-holding-dollar me-2"></i>Launch Interactive Dashboard
+                    <div class="mb-3">
+                        <span class="badge badge-outline-warning me-1">Demand Elasticity</span>
+                        <span class="badge badge-outline-warning me-1">Revenue Maximization</span>
+                        <span class="badge badge-outline-warning me-1">Demand Curve Fitting</span>
+                    </div>
+                    <a href="{{ url_for('app_blueprint.case_study_detail', study_id='price') }}" class="btn btn-outline-warning btn-block mt-3">
+                        <i class="fa-solid fa-hand-holding-dollar me-2"></i>Launch Interactive Dashboard
                     </a>
-</div>
-</div>
-</div>
-</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
@@ -122,6 +127,7 @@
 <script>
 AOS.init({ duration: 1000, once: true });
 </script>
+
 <style>
 .icon-circle {
     width: 60px;

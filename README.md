@@ -72,7 +72,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Layer | Technologies Used | Purpose |
 | :--- | :--- | :--- |
@@ -87,14 +87,20 @@ sequenceDiagram
 ## Core Features & Analytics Studio
 
 ### 1. Advanced Analytics Studio
-- **Dataset Selection**: Seamlessly load and switch between uploaded datasets or synthetic case studies.
-- **Feature Engineering**: Perform critical transformations including scaling (Standard, MinMax), categorical encoding (One Hot, Label), datetime decomposition, and generating interaction/polynomial terms.
-- **Statistical Modeling**: Run comprehensive Regression and Classification models, featuring dynamic performance diagnostics (R², RMSE, Accuracy, Precision) and interactive Plotly visualizations (Residuals, Confusion Matrices, ROC curves).
-- **Hypothesis Testing**: Conduct T Tests, ANOVA, and Chi Square tests to derive statistically rigorous insights.
-- **Time Series Forecasting**: Project target variables into the future using Holt Linear, Simple Exponential Smoothing (SES), or Time Index Linear Regression models.
-- **A/B Testing**: Evaluate experiment results through a Manual Calculator (Z Test) or a Dataset Driven Analyzer with detailed lift and statistical significance reporting.
+* **Dataset Selection**: Seamlessly load and switch between uploaded datasets or synthetic case studies.
+* **Feature Engineering**: Perform critical transformations including scaling (Standard, MinMax), categorical encoding (One Hot, Label), datetime decomposition, and generating interaction or polynomial terms.
+* **Statistical Modeling**: Run comprehensive Regression and Classification models, featuring dynamic performance diagnostics (R Squared, RMSE, Accuracy, Precision) and interactive Plotly visualizations (Residuals, Confusion Matrices, ROC curves).
+* **Hypothesis Testing**: Conduct T Tests, ANOVA, and Chi Square tests to derive statistically rigorous insights.
+* **Time Series Forecasting**: Project target variables into the future using Holt Linear, Simple Exponential Smoothing (SES), or Time Index Linear Regression models.
+* **A/B Testing**: Evaluate experiment results through a Manual Calculator (Z Test) or a Dataset Driven Analyzer with detailed lift and statistical significance reporting.
 
-### 2. Multi Agent Pipeline
+### 2. Case Studies Simulation Engine
+* **Telecom Customer Churn**: Interactive dashboard to simulate financial impact of targeting high risk customers with customizable thresholds and retention rates.
+* **E Commerce RFM Segmentation**: Perform unsupervised KMeans clustering on customer data to discover actionable marketing segments.
+* **Retail Sales Forecasting**: Project future baseline sales with integrated promotional marketing boost modeling.
+* **SaaS Price Elasticity**: Interactive demand curve calculator to find optimal revenue price points based on competitor pricing and marketing spend.
+
+### 3. Multi Agent Pipeline
 
 | Agent | Module | Primary Responsibilities |
 | :--- | :--- | :--- |

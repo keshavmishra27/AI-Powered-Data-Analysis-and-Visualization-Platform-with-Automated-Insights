@@ -22,6 +22,9 @@ exports/
 generate_messy.py
 refactor_hyphens.py
 remove_emojis.py
+remove_icons.py
+safe_refactor.py
+backend.zip
 *.csv
 *.xlsx
 
@@ -30,3 +33,31 @@ remove_emojis.py
 .idea/
 .gemini/
 .agent/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sql
+
+# Testing and coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Builds and distributions
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Jupyter Notebooks
+.ipynb_checkpoints/

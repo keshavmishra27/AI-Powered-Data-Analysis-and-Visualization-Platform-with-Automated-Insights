@@ -2,499 +2,495 @@
 {% block title %}Advanced Analytics Studio{% endblock %}
 
 {% block content %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
 <div class="container my-5">
-<div class="card shadow-lg p-4 bg-dark text-light rounded-4 border-secondary" data-aos="fade-up">
-<h2 class="text-center mb-2 text-gradient fw-bold"><i class="fa-solid fa-chart-pie me-2"></i>Advanced Analytics
-            Studio</h2>
-<p class="text-center text-muted mb-4">Unleash the power of Statistical Modeling, Forecasting, A/B Testing, and
-            Feature Engineering.</p>
-<!-- Navigation Tabs -->
-<ul class="nav nav-tabs nav-fill mb-4 border-secondary" id="analyticsTab" role="tablist">
-<li class="nav-item" role="presentation">
-<button class="nav-link active text-light bg-dark border-secondary" data-target="#dataset" data-toggle="tab" id="dataset-tab" role="tab" type="button"><i class="fa-solid fa-database me-2 text-info"></i>Dataset Select</button>
-</li>
-<li class="nav-item" role="presentation">
-<button class="nav-link text-light bg-dark border-secondary" data-target="#feature" data-toggle="tab" id="feature-tab" role="tab" type="button"><i class="fa-solid fa-gears me-2 text-warning"></i>Feature Eng.</button>
-</li>
-<li class="nav-item" role="presentation">
-<button class="nav-link text-light bg-dark border-secondary" data-target="#modeling" data-toggle="tab" id="modeling-tab" role="tab" type="button"><i class="fa-solid fa-brain me-2 text-danger"></i>Modeling</button>
-</li>
-<li class="nav-item" role="presentation">
-<button class="nav-link text-light bg-dark border-secondary" data-target="#forecasting" data-toggle="tab" id="forecasting-tab" role="tab" type="button"><i class="fa-solid fa-arrow-trend-up me-2 text-success"></i>Forecasting</button>
-</li>
-<li class="nav-item" role="presentation">
-<button class="nav-link text-light bg-dark border-secondary" data-target="#abtest" data-toggle="tab" id="abtest-tab" role="tab" type="button"><i class="fa-solid fa-circle-half-stroke me-2 text-primary"></i>A/B Testing</button>
-</li>
-</ul>
-<div class="tab-content" id="analyticsTabContent">
-<!-- TAB 1: DATASET SELECTION -->
-<div class="tab-pane fade show active p-3" id="dataset" role="tabpanel">
-<h4 class="text-info fw-bold mb-3"><i class="fa-solid fa-folder-open me-2"></i>Choose Active Dataset
-                </h4>
-<div class="row">
-<div class="col-md-6 mb-4">
-<div class="card bg-secondary p-3 border-0 rounded-3 h-100 shadow-sm">
-<h5><i class="fa-solid fa-clock-rotate-left me-2"></i>Your Uploaded Datasets</h5>
-<p class="small text-light-50">Select a file you uploaded previously during this session.
-                            </p>
-<div class="form-group">
-<select class="form-control bg-dark text-light border-secondary" id="datasetSelect">
-<option value="">-- Select File --</option>
+    <div class="card shadow-lg p-4 bg-dark text-light rounded-4 border-secondary" data-aos="fade-up">
+        <h2 class="text-center mb-2 text-gradient fw-bold"><i class="fa-solid fa-chart-pie me-2"></i>Advanced Analytics Studio</h2>
+        <p class="text-center text-muted mb-4">Unleash the power of Statistical Modeling, Forecasting, A/B Testing, and Feature Engineering.</p>
+
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs nav-fill mb-4 border-secondary" id="analyticsTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active text-light bg-dark border-secondary" id="dataset-tab" data-toggle="tab" data-target="#dataset" type="button" role="tab"><i class="fa-solid fa-database me-2 text-info"></i>Dataset Select</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link text-light bg-dark border-secondary" id="feature-tab" data-toggle="tab" data-target="#feature" type="button" role="tab"><i class="fa-solid fa-gears me-2 text-warning"></i>Feature Eng.</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link text-light bg-dark border-secondary" id="modeling-tab" data-toggle="tab" data-target="#modeling" type="button" role="tab"><i class="fa-solid fa-brain me-2 text-danger"></i>Modeling</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link text-light bg-dark border-secondary" id="forecasting-tab" data-toggle="tab" data-target="#forecasting" type="button" role="tab"><i class="fa-solid fa-arrow-trend-up me-2 text-success"></i>Forecasting</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link text-light bg-dark border-secondary" id="abtest-tab" data-toggle="tab" data-target="#abtest" type="button" role="tab"><i class="fa-solid fa-circle-half-stroke me-2 text-primary"></i>A/B Testing</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="analyticsTabContent">
+            <!-- TAB 1: DATASET SELECTION -->
+            <div class="tab-pane fade show active p-3" id="dataset" role="tabpanel">
+                <h4 class="text-info fw-bold mb-3"><i class="fa-solid fa-folder-open me-2"></i>Choose Active Dataset</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 h-100 shadow-sm">
+                            <h5><i class="fa-solid fa-clock-rotate-left me-2"></i>Your Uploaded Datasets</h5>
+                            <p class="small text-light-50">Select a file you uploaded previously during this session.</p>
+                            <div class="form-group">
+                                <select id="datasetSelect" class="form-control bg-dark text-light border-secondary">
+                                    <option value="">-- Select File --</option>
                                     {% for f in uploaded_files %}
-                                    <option %}="" %}selected{%="" active_dataset="=f" endif="" if="" value="{{ f }}" {%="">{{ f }}
-                                    </option>
+                                    <option value="{{ f }}" {% if active_dataset == f %}selected{% endif %}>{{ f }}</option>
                                     {% endfor %}
                                 </select>
-</div>
-<div class="d-flex gap-2 mt-2">
-<button class="btn btn-info w-100" id="loadDatasetBtn"><i class="fa-solid fa-check me-2"></i>Set Active</button>
-</div>
-</div>
-</div>
-<div class="col-md-6 mb-4">
-<div class="card bg-secondary p-3 border-0 rounded-3 h-100 shadow-sm">
-<h5><i class="fa-solid fa-graduation-cap me-2"></i>Preloaded Case Study Datasets</h5>
-<p class="small text-light-50">Work on synthetic datasets designed for practical business
-                                analytics case studies.</p>
-<div class="form-group">
-<select class="form-control bg-dark text-light border-secondary" id="caseStudySelect">
-<option value="">-- Choose Case Study --</option>
-<option %}="" %}selected{%="" active_dataset='="churn.csv"' endif="" if="" value="churn" {%="">
-                                        Telecom Customer Churn</option>
-<option %}="" %}selected{%="" active_dataset='="rfm.csv"' endif="" if="" value="rfm" {%="">E Commerce
-                                        RFM Segmentation</option>
-<option %}="" %}selected{%="" active_dataset='="sales.csv"' endif="" if="" value="sales" {%="">Retail
-                                        Sales Time Series</option>
-<option %}="" %}selected{%="" active_dataset='="price.csv"' endif="" if="" value="price" {%="">SaaS
-                                        Price Elasticity</option>
-</select>
-</div>
-<button class="btn btn-primary w-100" id="loadCaseStudyBtn"><i class="fa-solid fa-school me-2"></i>Load Case Study Data</button>
-</div>
-</div>
-</div>
-<div class="mt-4 p-3 bg-dark border border-secondary rounded-3 d-none" id="datasetStatsCard">
-<h5 class="text-success"><i class="fa-solid fa-circle-check me-2"></i>Active Dataset: <span class="text-light" id="activeDatasetName">None</span></h5>
-<div class="row text-center mt-3">
-<div class="col-md-3 col-6 mb-2">
-<div class="bg-secondary p-2 rounded">
-<h6 class="text-muted small">ROWS</h6>
-<h4 class="fw-bold" id="statRows">-</h4>
-</div>
-</div>
-<div class="col-md-3 col-6 mb-2">
-<div class="bg-secondary p-2 rounded">
-<h6 class="text-muted small">COLUMNS</h6>
-<h4 class="fw-bold" id="statCols">-</h4>
-</div>
-</div>
-<div class="col-md-3 col-6 mb-2">
-<div class="bg-secondary p-2 rounded">
-<h6 class="text-muted small">NUMERIC</h6>
-<h4 class="fw-bold" id="statNum">-</h4>
-</div>
-</div>
-<div class="col-md-3 col-6 mb-2">
-<div class="bg-secondary p-2 rounded">
-<h6 class="text-muted small">CATEGORICAL</h6>
-<h4 class="fw-bold" id="statCat">-</h4>
-</div>
-</div>
-</div>
-<div class="mt-3">
-<h6>Column Preview:</h6>
-<div class="d-flex flex-wrap gap-1" id="columnBadgeContainer"></div>
-</div>
-</div>
-</div>
-<!-- TAB 2: FEATURE ENGINEERING -->
-<div class="tab-pane fade p-3" id="feature" role="tabpanel">
-<h4 class="text-warning fw-bold mb-3"><i class="fa-solid fa-gears me-2"></i>Feature Engineering
-                    Operations</h4>
-<p class="small text-muted">Transform columns to improve statistical modeling accuracy. Features are
-                    saved dynamically to your active session.</p>
-<div class="row">
-<div class="col-md-4 mb-3">
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100">
-<h6 class="fw-bold text-warning"><i class="fa-solid fa-compress me-2"></i>Scaling Numeric
-                                Data</h6>
-<div class="form-group mt-2">
-<label class="small">Scale Type:</label>
-<select class="form-control form-control-sm bg-dark text-light border-secondary" id="scaleType">
-<option value="standard">Standard Scaling (Mean=0, Std=1)</option>
-<option value="minmax">MinMax Scaling (Range 0 to 1)</option>
-</select>
-</div>
-<div class="form-group">
-<label class="small">Select Columns:</label>
-<div class="checkbox-list bg-dark p-2 border border-secondary rounded overflow-auto" id="scaleColumns" style="max-height: 120px;"></div>
-</div>
-<button class="btn btn-sm btn-warning mt-auto" id="applyScaleBtn">Apply Scaling</button>
-</div>
-</div>
-<div class="col-md-4 mb-3">
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100">
-<h6 class="fw-bold text-warning"><i class="fa-solid fa-barcode me-2"></i>Categorical
-                                Encoding</h6>
-<div class="form-group mt-2">
-<label class="small">Encoding Method:</label>
-<select class="form-control form-control-sm bg-dark text-light border-secondary" id="encodeType">
-<option value="onehot">One Hot Encoding (Dummies)</option>
-<option value="label">Label Encoding (Integer Indices)</option>
-</select>
-</div>
-<div class="form-group">
-<label class="small">Select Columns:</label>
-<div class="checkbox-list bg-dark p-2 border border-secondary rounded overflow-auto" id="encodeColumns" style="max-height: 120px;"></div>
-</div>
-<button class="btn btn-sm btn-warning mt-auto" id="applyEncodeBtn">Apply Encoding</button>
-</div>
-</div>
-<div class="col-md-4 mb-3">
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100">
-<h6 class="fw-bold text-warning"><i class="fa-solid fa-calendar-days me-2"></i>DateTime
-                                Decomposition</h6>
-<div class="form-group mt-2">
-<label class="small">Select Date Column:</label>
-<select class="form-control form-control-sm bg-dark text-light border-secondary" id="dateColumnSelect"></select>
-</div>
-<div class="form-group">
-<label class="small">Extract Features:</label>
-<div class="bg-dark p-2 border border-secondary rounded small">
-<div class="form-check"><input checked="" class="form-check-input" name="dtExtract" type="checkbox" value="year"/> <label class="form-check-label text-light">Year</label></div>
-<div class="form-check"><input checked="" class="form-check-input" name="dtExtract" type="checkbox" value="month"/> <label class="form-check-label text-light">Month</label></div>
-<div class="form-check"><input checked="" class="form-check-input" name="dtExtract" type="checkbox" value="day"/> <label class="form-check-label text-light">Day</label></div>
-<div class="form-check"><input checked="" class="form-check-input" name="dtExtract" type="checkbox" value="dayofweek"/> <label class="form-check-label text-light">Day of Week</label></div>
-<div class="form-check"><input checked="" class="form-check-input" name="dtExtract" type="checkbox" value="is_weekend"/> <label class="form-check-label text-light">Is Weekend</label></div>
-</div>
-</div>
-<button class="btn btn-sm btn-warning mt-auto" id="applyDateBtn">Decompose Date</button>
-</div>
-</div>
-</div>
-<div class="row mt-3">
-<div class="col-md-6 mb-3">
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100">
-<h6 class="fw-bold text-warning"><i class="fa-solid fa-shuffle me-2"></i>Interaction &amp;
-                                Polynomials</h6>
-<div class="row">
-<div class="col-6">
-<div class="form-group">
-<label class="small">Numeric Col 1:</label>
-<select class="form-control form-control-sm bg-dark text-light border-secondary" id="interCol1"></select>
-</div>
-<div class="form-group">
-<label class="small">Numeric Col 2:</label>
-<select class="form-control form-control-sm bg-dark text-light border-secondary" id="interCol2"></select>
-</div>
-<button class="btn btn-sm btn-warning w-100" id="applyInteractionBtn">Create
-                                        Interaction</button>
-</div>
-<div class="col-6">
-<div class="form-group">
-<label class="small">Poly Columns:</label>
-<div class="checkbox-list bg-dark p-2 border border-secondary rounded overflow-auto" id="polyColumns" style="max-height: 80px;"></div>
-</div>
-<div class="form-group">
-<label class="small">Degree:</label>
-<input class="form-control form-control-sm bg-dark text-light border-secondary" id="polyDegree" max="4" min="2" type="number" value="2"/>
-</div>
-<button class="btn btn-sm btn-warning w-100" id="applyPolyBtn">Add Poly
-                                        Terms</button>
-</div>
-</div>
-</div>
-</div>
-<div class="col-md-6 mb-3">
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100">
-<h6 class="fw-bold text-warning"><i class="fa-solid fa-terminal me-2"></i>Operation Console
-                                Logs</h6>
-<div class="bg-dark p-3 border border-secondary rounded text-monospace small text-success overflow-auto" id="featureLogs" style="height: 180px; white-space: pre-wrap;">Console ready...</div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 3: MODELING -->
-<div class="tab-pane fade p-3" id="modeling" role="tabpanel">
-<h4 class="text-danger fw-bold mb-3"><i class="fa-solid fa-brain me-2"></i>Statistical Modeling Studio
-                </h4>
-<div class="row">
-<!-- Config Controls -->
-<div class="col-lg-4 mb-4">
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm">
-<h5 class="text-danger mb-3"><i class="fa-solid fa-sliders me-2"></i>Model Setup</h5>
-<div class="form-group">
-<label>Model Domain:</label>
-<select class="form-control bg-dark text-light border-secondary" id="modelDomain">
-<option value="regression">Regression (Continuous values)</option>
-<option value="classification">Classification (Categories/Binary)</option>
-<option value="hypothesis">Hypothesis Testing (Statistical significance)</option>
-</select>
-</div>
-<!-- Regression/Classification Config -->
-<div id="mlModelConfig">
-<div class="form-group">
-<label>Algorithm:</label>
-<select class="form-control bg-dark text-light border-secondary" id="mlAlgo">
-<!-- Will populate dynamically based on Domain -->
-</select>
-</div>
-<div class="form-group">
-<label>Target Variable (Y):</label>
-<select class="form-control bg-dark text-light border-secondary" id="mlTarget"></select>
-</div>
-<div class="form-group">
-<label>Predictor Variables (X):</label>
-<div class="checkbox-list bg-dark p-2 border border-secondary rounded overflow-auto" id="mlPredictors" style="max-height: 150px;"></div>
-</div>
-</div>
-<!-- Hypothesis Test Config -->
-<div class="d-none" id="hypothesisConfig">
-<div class="form-group">
-<label>Statistical Test:</label>
-<select class="form-control bg-dark text-light border-secondary" id="hypoTestType">
-<option value="t-test-ind">Independent T-Test (Group A vs Group B Means)
-                                        </option>
-<option value="anova">One way ANOVA (Multiple Group Means Comparison)</option>
-<option value="chi-square">Chi-Square Test of Independence (Two Categoricals)
-                                        </option>
-</select>
-</div>
-<div class="form-group">
-<label id="hypoLabel1">Categorical Group Variable:</label>
-<select class="form-control bg-dark text-light border-secondary" id="hypoCol1"></select>
-</div>
-<div class="form-group" id="hypoCol2Container">
-<label id="hypoLabel2">Numeric Metric Variable:</label>
-<select class="form-control bg-dark text-light border-secondary" id="hypoCol2"></select>
-</div>
-</div>
-<button class="btn btn-danger w-100 mt-3" id="runModelBtn"><i class="fa-solid fa-bolt me-2"></i>Execute Model Analysis</button>
-</div>
-</div>
-<!-- Outputs / Visuals -->
-<div class="col-lg-8">
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 text-center d-flex align-items-center justify-content-center" id="modelOutputPlaceholder">
-<div class="p-5">
-<i class="fa-solid fa-code-branch fa-4x text-danger mb-3"></i>
-<h4>No Results Generated</h4>
-<p class="text-light-50">Select your active model parameters on the left and click
-                                    execute to render metrics and visualization plots.</p>
-</div>
-</div>
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 d-none" id="modelResultsContainer">
-<h5 class="text-danger fw-bold mb-3"><i class="fa-solid fa-square-poll-vertical me-2"></i>Analysis Output</h5>
-<!-- Summary Statistics -->
-<div class="mb-4" id="modelMetricsSummary"></div>
-<!-- Plotly Charts -->
-<div class="row">
-<div class="col-md-6 mb-3" id="modelChart1Container">
-<div class="w-100" id="modelChart1" style="height: 300px;"></div>
-</div>
-<div class="col-md-6 mb-3" id="modelChart2Container">
-<div class="w-100" id="modelChart2" style="height: 300px;"></div>
-</div>
-</div>
-<!-- Impact Coefficients / Feature Importances -->
-<div class="mt-3" id="modelFeatureImpacts">
-<h6>Estimated Feature Impact Breakdown:</h6>
-<div class="table-responsive">
-<table class="table table-sm table-dark table-striped rounded overflow-hidden">
-<thead>
-<tr>
-<th>Feature Variable</th>
-<th>Impact Metric Value</th>
-</tr>
-</thead>
-<tbody id="modelImpactBody"></tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 4: FORECASTING -->
-<div class="tab-pane fade p-3" id="forecasting" role="tabpanel">
-<h4 class="text-success fw-bold mb-3"><i class="fa-solid fa-arrow-trend-up me-2"></i>Time Series
-                    Forecasting Studio</h4>
-<div class="row">
-<div class="col-lg-4 mb-4">
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm">
-<h5 class="text-success mb-3"><i class="fa-solid fa-clock me-2"></i>Forecast Configuration
-                            </h5>
-<div class="form-group">
-<label>Date/Time Column:</label>
-<select class="form-control bg-dark text-light border-secondary" id="forecastDateCol"></select>
-</div>
-<div class="form-group">
-<label>Target Numeric Column to Project:</label>
-<select class="form-control bg-dark text-light border-secondary" id="forecastTargetCol"></select>
-</div>
-<div class="form-group">
-<label>Projection Horizon (Days):</label>
-<input class="form-control bg-dark text-light border-secondary" id="forecastHorizon" max="180" min="5" type="number" value="30"/>
-</div>
-<div class="form-group">
-<label>Forecasting Model:</label>
-<select class="form-control bg-dark text-light border-secondary" id="forecastModel">
-<option value="regression">Time Index Linear Regression (Robust trend + Seasonality)
-                                    </option>
-<option value="ses">Simple Exponential Smoothing (Level based)</option>
-<option value="holt_linear">Holt Linear Trend Model</option>
-</select>
-</div>
-<button class="btn btn-success w-100 mt-3" id="runForecastBtn"><i class="fa-solid fa-compass-drafting me-2"></i>Generate Forecast</button>
-</div>
-</div>
-<div class="col-lg-8">
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 text-center d-flex align-items-center justify-content-center" id="forecastPlaceholder">
-<div class="p-5">
-<i class="fa-solid fa-chart-line fa-4x text-success mb-3"></i>
-<h4>No Projected Data Available</h4>
-<p class="text-light-50">Select your date column and time dependent metric, then execute
-                                    to generate future forecasts with uncertainty intervals.</p>
-</div>
-</div>
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 d-none" id="forecastResultsContainer">
-<h5 class="text-success fw-bold mb-3"><i class="fa-solid fa-magnifying-glass-chart me-2"></i>Forecast Chart &amp; Diagnostics
-                            </h5>
-<div class="row text-center mb-3">
-<div class="col-6">
-<div class="bg-dark p-2 rounded">
-<span class="text-muted small">RMSE (Root Mean Square Error)</span>
-<h4 class="fw-bold text-warning" id="forecastRMSE">-</h4>
-</div>
-</div>
-<div class="col-6">
-<div class="bg-dark p-2 rounded">
-<span class="text-muted small">MAE (Mean Absolute Error)</span>
-<h4 class="fw-bold text-warning" id="forecastMAE">-</h4>
-</div>
-</div>
-</div>
-<div id="forecastChart" style="height: 350px;"></div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 5: A/B TESTING -->
-<div class="tab-pane fade p-3" id="abtest" role="tabpanel">
-<h4 class="text-primary fw-bold mb-3"><i class="fa-solid fa-circle-half-stroke me-2"></i>A/B Testing
-                    Experiments</h4>
-<div class="row">
-<!-- Left: Choice between manual calculator and dataset analyzer -->
-<div class="col-md-5 mb-4">
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm">
-<ul class="nav nav-pills mb-3" id="abSubTab" role="tablist">
-<li class="nav-item flex-fill"><button class="nav-link active btn-sm text-center w-100 text-light bg-dark border-secondary" data-target="#abCalc" data-toggle="pill" id="abCalc-tab" type="button">Manual
-                                        Calculator</button></li>
-<li class="nav-item flex-fill ms-2"><button class="nav-link btn-sm text-center w-100 text-light bg-dark border-secondary" data-target="#abDataset" data-toggle="pill" id="abDataset-tab" type="button">Analyze Dataset</button></li>
-</ul>
-<div class="tab-content" id="abSubTabContent">
-<!-- Manual Calculator Form -->
-<div class="tab-pane fade show active" id="abCalc" role="tabpanel">
-<h6 class="fw-bold text-info"><i class="fa-solid fa-calculator me-2"></i>Two Sample
-                                        Z Test Calculator</h6>
-<div class="row mt-3">
-<div class="col-6">
-<label class="small text-danger fw-bold">Variant A (Control):</label>
-<div class="form-group mb-2">
-<input class="form-control form-control-sm bg-dark text-light border-secondary" id="abConvsA" placeholder="Conversions" type="number" value="120"/>
-</div>
-<div class="form-group">
-<input class="form-control form-control-sm bg-dark text-light border-secondary" id="abSizeA" placeholder="Visitors" type="number" value="1000"/>
-</div>
-</div>
-<div class="col-6">
-<label class="small text-success fw-bold">Variant B (Test):</label>
-<div class="form-group mb-2">
-<input class="form-control form-control-sm bg-dark text-light border-secondary" id="abConvsB" placeholder="Conversions" type="number" value="155"/>
-</div>
-<div class="form-group">
-<input class="form-control form-control-sm bg-dark text-light border-secondary" id="abSizeB" placeholder="Visitors" type="number" value="1000"/>
-</div>
-</div>
-</div>
-<div class="form-group mt-2">
-<label class="small">Confidence Level:</label>
-<select class="form-control form-control-sm bg-dark text-light border-secondary" id="abConfLevel">
-<option value="0.95">95% Significance</option>
-<option value="0.99">99% Significance</option>
-<option value="0.90">90% Significance</option>
-</select>
-</div>
-<button class="btn btn-primary w-100 mt-2" id="runABCalcBtn">Compute Hypothesis
-                                        Test</button>
-</div>
-<!-- Dataset Analyzer Form -->
-<div class="tab-pane fade" id="abDataset" role="tabpanel">
-<h6 class="fw-bold text-info"><i class="fa-solid fa-magnifying-glass me-2"></i>Dataset Driven A/B Analyzer
-                                    </h6>
-<div class="form-group mt-3">
-<label class="small">Treatment/Variant Column:</label>
-<select class="form-control form-control-sm bg-dark text-light border-secondary" id="abGroupCol"></select>
-</div>
-<div class="form-group">
-<label class="small">Metric Column (Revenue or Conversions):</label>
-<select class="form-control form-control-sm bg-dark text-light border-secondary" id="abMetricCol"></select>
-</div>
-<div class="form-group">
-<label class="small">Confidence Level:</label>
-<select class="form-control form-control-sm bg-dark text-light border-secondary" id="abDataConfLevel">
-<option value="0.95">95% (Alpha = 0.05)</option>
-<option value="0.99">99% (Alpha = 0.01)</option>
-</select>
-</div>
-<button class="btn btn-primary w-100 mt-2" id="runABDatasetBtn">Analyze
-                                        Columns</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Right: Results and Plots -->
-<div class="col-md-7">
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 text-center d-flex align-items-center justify-content-center" id="abPlaceholder">
-<div class="p-5">
-<i class="fa-solid fa-people-group fa-4x text-primary mb-3"></i>
-<h4>No Experiment Results</h4>
-<p class="text-light-50">Enter conversion parameters or pick columns to run Z tests or
-                                    T-tests and check for relative conversion lift.</p>
-</div>
-</div>
-<div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 d-none" id="abResultsContainer">
-<h5 class="text-primary fw-bold mb-3"><i class="fa-solid fa-circle-check me-2"></i>Test
-                                Results Summary</h5>
-<div class="alert mb-3" id="abAlertBox" role="alert"></div>
-<div class="row text-center mb-3">
-<div class="col-4">
-<div class="bg-dark p-2 rounded">
-<span class="text-muted small">Relative Lift</span>
-<h4 class="fw-bold" id="abLiftVal">-</h4>
-</div>
-</div>
-<div class="col-4">
-<div class="bg-dark p-2 rounded">
-<span class="text-muted small">P Value</span>
-<h4 class="fw-bold" id="abPval">-</h4>
-</div>
-</div>
-<div class="col-4">
-<div class="bg-dark p-2 rounded">
-<span class="text-muted small">Statistic</span>
-<h4 class="fw-bold" id="abStat">-</h4>
-</div>
-</div>
-</div>
-<div id="abChart" style="height: 300px;"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+                            </div>
+                            <div class="d-flex gap-2 mt-2">
+                                <button class="btn btn-info w-100" id="loadDatasetBtn"><i class="fa-solid fa-check me-2"></i>Set Active</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 h-100 shadow-sm">
+                            <h5><i class="fa-solid fa-graduation-cap me-2"></i>Preloaded Case Study Datasets</h5>
+                            <p class="small text-light-50">Work on synthetic datasets designed for practical business analytics case studies.</p>
+                            <div class="form-group">
+                                <select id="caseStudySelect" class="form-control bg-dark text-light border-secondary">
+                                    <option value="">-- Choose Case Study --</option>
+                                    <option value="churn" {% if active_dataset == "churn.csv" %}selected{% endif %}>Telecom Customer Churn</option>
+                                    <option value="rfm" {% if active_dataset == "rfm.csv" %}selected{% endif %}>E Commerce RFM Segmentation</option>
+                                    <option value="sales" {% if active_dataset == "sales.csv" %}selected{% endif %}>Retail Sales Time Series</option>
+                                    <option value="price" {% if active_dataset == "price.csv" %}selected{% endif %}>SaaS Price Elasticity</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary w-100" id="loadCaseStudyBtn"><i class="fa-solid fa-school me-2"></i>Load Case Study Data</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 p-3 bg-dark border border-secondary rounded-3 d-none" id="datasetStatsCard">
+                    <h5 class="text-success"><i class="fa-solid fa-circle-check me-2"></i>Active Dataset: <span id="activeDatasetName" class="text-light">None</span></h5>
+                    <div class="row text-center mt-3">
+                        <div class="col-md-3 col-6 mb-2">
+                            <div class="bg-secondary p-2 rounded">
+                                <h6 class="text-muted small">ROWS</h6>
+                                <h4 id="statRows" class="fw-bold">-</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <div class="bg-secondary p-2 rounded">
+                                <h6 class="text-muted small">COLUMNS</h6>
+                                <h4 id="statCols" class="fw-bold">-</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <div class="bg-secondary p-2 rounded">
+                                <h6 class="text-muted small">NUMERIC</h6>
+                                <h4 id="statNum" class="fw-bold">-</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <div class="bg-secondary p-2 rounded">
+                                <h6 class="text-muted small">CATEGORICAL</h6>
+                                <h4 id="statCat" class="fw-bold">-</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <h6>Column Preview:</h6>
+                        <div id="columnBadgeContainer" class="d-flex flex-wrap gap-1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: FEATURE ENGINEERING -->
+            <div class="tab-pane fade p-3" id="feature" role="tabpanel">
+                <h4 class="text-warning fw-bold mb-3"><i class="fa-solid fa-gears me-2"></i>Feature Engineering Operations</h4>
+                <p class="small text-muted">Transform columns to improve statistical modeling accuracy. Features are saved dynamically to your active session.</p>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100">
+                            <h6 class="fw-bold text-warning"><i class="fa-solid fa-compress me-2"></i>Scaling Numeric Data</h6>
+                            <div class="form-group mt-2">
+                                <label class="small">Scale Type:</label>
+                                <select id="scaleType" class="form-control form-control-sm bg-dark text-light border-secondary">
+                                    <option value="standard">Standard Scaling (Mean=0, Std=1)</option>
+                                    <option value="minmax">MinMax Scaling (Range 0 to 1)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="small">Select Columns:</label>
+                                <div id="scaleColumns" class="checkbox-list bg-dark p-2 border border-secondary rounded overflow-auto" style="max-height: 120px;"></div>
+                            </div>
+                            <button class="btn btn-sm btn-warning mt-auto" id="applyScaleBtn">Apply Scaling</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100">
+                            <h6 class="fw-bold text-warning"><i class="fa-solid fa-barcode me-2"></i>Categorical Encoding</h6>
+                            <div class="form-group mt-2">
+                                <label class="small">Encoding Method:</label>
+                                <select id="encodeType" class="form-control form-control-sm bg-dark text-light border-secondary">
+                                    <option value="onehot">One-Hot Encoding (Dummies)</option>
+                                    <option value="label">Label Encoding (Integer Indices)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="small">Select Columns:</label>
+                                <div id="encodeColumns" class="checkbox-list bg-dark p-2 border border-secondary rounded overflow-auto" style="max-height: 120px;"></div>
+                            </div>
+                            <button class="btn btn-sm btn-warning mt-auto" id="applyEncodeBtn">Apply Encoding</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100">
+                            <h6 class="fw-bold text-warning"><i class="fa-solid fa-calendar-days me-2"></i>DateTime Decomposition</h6>
+                            <div class="form-group mt-2">
+                                <label class="small">Select Date Column:</label>
+                                <select id="dateColumnSelect" class="form-control form-control-sm bg-dark text-light border-secondary"></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="small">Extract Features:</label>
+                                <div class="bg-dark p-2 border border-secondary rounded small">
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="year" name="dtExtract" checked> <label class="form-check-label text-light">Year</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="month" name="dtExtract" checked> <label class="form-check-label text-light">Month</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="day" name="dtExtract" checked> <label class="form-check-label text-light">Day</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="dayofweek" name="dtExtract" checked> <label class="form-check-label text-light">Day of Week</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="is_weekend" name="dtExtract" checked> <label class="form-check-label text-light">Is Weekend</label></div>
+                                </div>
+                            </div>
+                            <button class="btn btn-sm btn-warning mt-auto" id="applyDateBtn">Decompose Date</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100">
+                            <h6 class="fw-bold text-warning"><i class="fa-solid fa-shuffle me-2"></i>Interaction & Polynomials</h6>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small">Numeric Col 1:</label>
+                                        <select id="interCol1" class="form-control form-control-sm bg-dark text-light border-secondary"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="small">Numeric Col 2:</label>
+                                        <select id="interCol2" class="form-control form-control-sm bg-dark text-light border-secondary"></select>
+                                    </div>
+                                    <button class="btn btn-sm btn-warning w-100" id="applyInteractionBtn">Create Interaction</button>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small">Poly Columns:</label>
+                                        <div id="polyColumns" class="checkbox-list bg-dark p-2 border border-secondary rounded overflow-auto" style="max-height: 80px;"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="small">Degree:</label>
+                                        <input type="number" id="polyDegree" class="form-control form-control-sm bg-dark text-light border-secondary" value="2" min="2" max="4">
+                                    </div>
+                                    <button class="btn btn-sm btn-warning w-100" id="applyPolyBtn">Add Poly Terms</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100">
+                            <h6 class="fw-bold text-warning"><i class="fa-solid fa-terminal me-2"></i>Operation Console Logs</h6>
+                            <div id="featureLogs" class="bg-dark p-3 border border-secondary rounded text-monospace small text-success overflow-auto" style="height: 180px; white-space: pre-wrap;">Console ready...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: MODELING -->
+            <div class="tab-pane fade p-3" id="modeling" role="tabpanel">
+                <h4 class="text-danger fw-bold mb-3"><i class="fa-solid fa-brain me-2"></i>Statistical Modeling Studio</h4>
+                <div class="row">
+                    <!-- Config Controls -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm">
+                            <h5 class="text-danger mb-3"><i class="fa-solid fa-sliders me-2"></i>Model Setup</h5>
+                            
+                            <div class="form-group">
+                                <label>Model Domain:</label>
+                                <select id="modelDomain" class="form-control bg-dark text-light border-secondary">
+                                    <option value="regression">Regression (Continuous values)</option>
+                                    <option value="classification">Classification (Categories/Binary)</option>
+                                    <option value="hypothesis">Hypothesis Testing (Statistical significance)</option>
+                                </select>
+                            </div>
+
+                            <!-- Regression/Classification Config -->
+                            <div id="mlModelConfig">
+                                <div class="form-group">
+                                    <label>Algorithm:</label>
+                                    <select id="mlAlgo" class="form-control bg-dark text-light border-secondary">
+                                        <!-- Will populate dynamically based on Domain -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Target Variable (Y):</label>
+                                    <select id="mlTarget" class="form-control bg-dark text-light border-secondary"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Predictor Variables (X):</label>
+                                    <div id="mlPredictors" class="checkbox-list bg-dark p-2 border border-secondary rounded overflow-auto" style="max-height: 150px;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Hypothesis Test Config -->
+                            <div id="hypothesisConfig" class="d-none">
+                                <div class="form-group">
+                                    <label>Statistical Test:</label>
+                                    <select id="hypoTestType" class="form-control bg-dark text-light border-secondary">
+                                        <option value="t-test-ind">Independent T-Test (Group A vs Group B Means)</option>
+                                        <option value="anova">One-way ANOVA (Multiple Group Means Comparison)</option>
+                                        <option value="chi-square">Chi-Square Test of Independence (Two Categoricals)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label id="hypoLabel1">Categorical Group Variable:</label>
+                                    <select id="hypoCol1" class="form-control bg-dark text-light border-secondary"></select>
+                                </div>
+                                <div class="form-group" id="hypoCol2Container">
+                                    <label id="hypoLabel2">Numeric Metric Variable:</label>
+                                    <select id="hypoCol2" class="form-control bg-dark text-light border-secondary"></select>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-danger w-100 mt-3" id="runModelBtn"><i class="fa-solid fa-bolt me-2"></i>Execute Model Analysis</button>
+                        </div>
+                    </div>
+
+                    <!-- Outputs / Visuals -->
+                    <div class="col-lg-8">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 text-center d-flex align-items-center justify-content-center" id="modelOutputPlaceholder">
+                            <div class="p-5">
+                                <i class="fa-solid fa-code-branch fa-4x text-danger mb-3"></i>
+                                <h4>No Results Generated</h4>
+                                <p class="text-light-50">Select your active model parameters on the left and click execute to render metrics and visualization plots.</p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 d-none" id="modelResultsContainer">
+                            <h5 class="text-danger fw-bold mb-3"><i class="fa-solid fa-square-poll-vertical me-2"></i>Analysis Output</h5>
+                            
+                            <!-- Summary Statistics -->
+                            <div id="modelMetricsSummary" class="mb-4"></div>
+                            
+                            <!-- Plotly Charts -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3" id="modelChart1Container">
+                                    <div id="modelChart1" class="w-100" style="height: 300px;"></div>
+                                </div>
+                                <div class="col-md-6 mb-3" id="modelChart2Container">
+                                    <div id="modelChart2" class="w-100" style="height: 300px;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Impact Coefficients / Feature Importances -->
+                            <div id="modelFeatureImpacts" class="mt-3">
+                                <h6>Estimated Feature Impact Breakdown:</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-dark table-striped rounded overflow-hidden">
+                                        <thead>
+                                            <tr>
+                                                <th>Feature Variable</th>
+                                                <th>Impact Metric Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="modelImpactBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: FORECASTING -->
+            <div class="tab-pane fade p-3" id="forecasting" role="tabpanel">
+                <h4 class="text-success fw-bold mb-3"><i class="fa-solid fa-arrow-trend-up me-2"></i>Time Series Forecasting Studio</h4>
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm">
+                            <h5 class="text-success mb-3"><i class="fa-solid fa-clock me-2"></i>Forecast Configuration</h5>
+                            
+                            <div class="form-group">
+                                <label>Date/Time Column:</label>
+                                <select id="forecastDateCol" class="form-control bg-dark text-light border-secondary"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Target Numeric Column to Project:</label>
+                                <select id="forecastTargetCol" class="form-control bg-dark text-light border-secondary"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Projection Horizon (Days):</label>
+                                <input type="number" id="forecastHorizon" class="form-control bg-dark text-light border-secondary" value="30" min="5" max="180">
+                            </div>
+                            <div class="form-group">
+                                <label>Forecasting Model:</label>
+                                <select id="forecastModel" class="form-control bg-dark text-light border-secondary">
+                                    <option value="regression">Time-Index Linear Regression (Robust trend + Seasonality)</option>
+                                    <option value="ses">Simple Exponential Smoothing (Level-based)</option>
+                                    <option value="holt_linear">Holt Linear Trend Model</option>
+                                </select>
+                            </div>
+                            
+                            <button class="btn btn-success w-100 mt-3" id="runForecastBtn"><i class="fa-solid fa-compass-drafting me-2"></i>Generate Forecast</button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-8">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 text-center d-flex align-items-center justify-content-center" id="forecastPlaceholder">
+                            <div class="p-5">
+                                <i class="fa-solid fa-chart-line fa-4x text-success mb-3"></i>
+                                <h4>No Projected Data Available</h4>
+                                <p class="text-light-50">Select your date column and time-dependent metric, then execute to generate future forecasts with uncertainty intervals.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 d-none" id="forecastResultsContainer">
+                            <h5 class="text-success fw-bold mb-3"><i class="fa-solid fa-magnifying-glass-chart me-2"></i>Forecast Chart & Diagnostics</h5>
+                            <div class="row text-center mb-3">
+                                <div class="col-6">
+                                    <div class="bg-dark p-2 rounded">
+                                        <span class="text-muted small">RMSE (Root Mean Square Error)</span>
+                                        <h4 id="forecastRMSE" class="fw-bold text-warning">-</h4>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="bg-dark p-2 rounded">
+                                        <span class="text-muted small">MAE (Mean Absolute Error)</span>
+                                        <h4 id="forecastMAE" class="fw-bold text-warning">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="forecastChart" style="height: 350px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: A/B TESTING -->
+            <div class="tab-pane fade p-3" id="abtest" role="tabpanel">
+                <h4 class="text-primary fw-bold mb-3"><i class="fa-solid fa-circle-half-stroke me-2"></i>A/B Testing Experiments</h4>
+                <div class="row">
+                    <!-- Left: Choice between manual calculator and dataset analyzer -->
+                    <div class="col-md-5 mb-4">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm">
+                            <ul class="nav nav-pills mb-3" id="abSubTab" role="tablist">
+                                <li class="nav-item flex-fill"><button class="nav-link active btn-sm text-center w-100 text-light bg-dark border-secondary" id="abCalc-tab" data-toggle="pill" data-target="#abCalc" type="button">Manual Calculator</button></li>
+                                <li class="nav-item flex-fill ms-2"><button class="nav-link btn-sm text-center w-100 text-light bg-dark border-secondary" id="abDataset-tab" data-toggle="pill" data-target="#abDataset" type="button">Analyze Dataset</button></li>
+                            </ul>
+
+                            <div class="tab-content" id="abSubTabContent">
+                                <!-- Manual Calculator Form -->
+                                <div class="tab-pane fade show active" id="abCalc" role="tabpanel">
+                                    <h6 class="fw-bold text-info"><i class="fa-solid fa-calculator me-2"></i>Two-Sample Z-Test Calculator</h6>
+                                    <div class="row mt-3">
+                                        <div class="col-6">
+                                            <label class="small text-danger fw-bold">Variant A (Control):</label>
+                                            <div class="form-group mb-2">
+                                                <input type="number" id="abConvsA" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Conversions" value="120">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="number" id="abSizeA" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Visitors" value="1000">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="small text-success fw-bold">Variant B (Test):</label>
+                                            <div class="form-group mb-2">
+                                                <input type="number" id="abConvsB" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Conversions" value="155">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="number" id="abSizeB" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Visitors" value="1000">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label class="small">Confidence Level:</label>
+                                        <select id="abConfLevel" class="form-control form-control-sm bg-dark text-light border-secondary">
+                                            <option value="0.95">95% Significance</option>
+                                            <option value="0.99">99% Significance</option>
+                                            <option value="0.90">90% Significance</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-primary w-100 mt-2" id="runABCalcBtn">Compute Hypothesis Test</button>
+                                </div>
+
+                                <!-- Dataset Analyzer Form -->
+                                <div class="tab-pane fade" id="abDataset" role="tabpanel">
+                                    <h6 class="fw-bold text-info"><i class="fa-solid fa-magnifying-glass me-2"></i>Dataset-Driven A/B Analyzer</h6>
+                                    <div class="form-group mt-3">
+                                        <label class="small">Treatment/Variant Column:</label>
+                                        <select id="abGroupCol" class="form-control form-control-sm bg-dark text-light border-secondary"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="small">Metric Column (Revenue or Conversions):</label>
+                                        <select id="abMetricCol" class="form-control form-control-sm bg-dark text-light border-secondary"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="small">Confidence Level:</label>
+                                        <select id="abDataConfLevel" class="form-control form-control-sm bg-dark text-light border-secondary">
+                                            <option value="0.95">95% (Alpha = 0.05)</option>
+                                            <option value="0.99">99% (Alpha = 0.01)</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-primary w-100 mt-2" id="runABDatasetBtn">Analyze Columns</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Results and Plots -->
+                    <div class="col-md-7">
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 text-center d-flex align-items-center justify-content-center" id="abPlaceholder">
+                            <div class="p-5">
+                                <i class="fa-solid fa-people-group fa-4x text-primary mb-3"></i>
+                                <h4>No Experiment Results</h4>
+                                <p class="text-light-50">Enter conversion parameters or pick columns to run Z-tests or T-tests and check for relative conversion lift.</p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-secondary p-3 border-0 rounded-3 shadow-sm h-100 d-none" id="abResultsContainer">
+                            <h5 class="text-primary fw-bold mb-3"><i class="fa-solid fa-circle-check me-2"></i>Test Results Summary</h5>
+                            <div id="abAlertBox" class="alert mb-3" role="alert"></div>
+                            
+                            <div class="row text-center mb-3">
+                                <div class="col-4">
+                                    <div class="bg-dark p-2 rounded">
+                                        <span class="text-muted small">Relative Lift</span>
+                                        <h4 id="abLiftVal" class="fw-bold">-</h4>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="bg-dark p-2 rounded">
+                                        <span class="text-muted small">P-Value</span>
+                                        <h4 id="abPval" class="fw-bold">-</h4>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="bg-dark p-2 rounded">
+                                        <span class="text-muted small">Statistic</span>
+                                        <h4 id="abStat" class="fw-bold">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="abChart" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
@@ -503,341 +499,342 @@
 {{ super() }}
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
 <script>
-    AOS.init({ duration: 1000, once: true });
+AOS.init({ duration: 1000, once: true });
 
-    let activeDatasetName = "";
-    let datasetColumns = [];
-    let numericColumns = [];
-    let categoricalColumns = [];
+let activeDatasetName = "";
+let datasetColumns = [];
+let numericColumns = [];
+let categoricalColumns = [];
 
-    // Helper to update all select elements
-    function populateDropdowns() {
-        const selectors = [
-            '#dateColumnSelect', '#interCol1', '#interCol2',
-            '#mlTarget', '#hypoCol1', '#hypoCol2',
-            '#forecastDateCol', '#forecastTargetCol', '#abGroupCol', '#abMetricCol'
-        ];
+// Helper to update all select elements
+function populateDropdowns() {
+    const selectors = [
+        '#dateColumnSelect', '#interCol1', '#interCol2', 
+        '#mlTarget', '#hypoCol1', '#hypoCol2',
+        '#forecastDateCol', '#forecastTargetCol', '#abGroupCol', '#abMetricCol'
+    ];
+    
+    // Clear and add defaults
+    selectors.forEach(sel => {
+        const el = $(sel);
+        el.empty();
+    });
+    
+    $('#mlPredictors').empty();
+    $('#scaleColumns').empty();
+    $('#encodeColumns').empty();
+    $('#polyColumns').empty();
 
-        // Clear and add defaults
-        selectors.forEach(sel => {
-            const el = $(sel);
-            el.empty();
-        });
-
-        $('#mlPredictors').empty();
-        $('#scaleColumns').empty();
-        $('#encodeColumns').empty();
-        $('#polyColumns').empty();
-
-        // Populate Scale (numeric only)
-        numericColumns.forEach(col => {
-            $('#scaleColumns').append(`
+    // Populate Scale (numeric only)
+    numericColumns.forEach(col => {
+        $('#scaleColumns').append(`
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="${col}" name="scaleCols">
                 <label class="form-check-label small text-light">${col}</label>
             </div>
         `);
-            $('#polyColumns').append(`
+        $('#polyColumns').append(`
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="${col}" name="polyCols">
                 <label class="form-check-label small text-light">${col}</label>
             </div>
         `);
-            $('#interCol1').append(new Option(col, col));
-            $('#interCol2').append(new Option(col, col));
-            $('#forecastTargetCol').append(new Option(col, col));
-        });
+        $('#interCol1').append(new Option(col, col));
+        $('#interCol2').append(new Option(col, col));
+        $('#forecastTargetCol').append(new Option(col, col));
+    });
 
-        // Populate Encode (categorical only)
-        categoricalColumns.forEach(col => {
-            $('#encodeColumns').append(`
+    // Populate Encode (categorical only)
+    categoricalColumns.forEach(col => {
+        $('#encodeColumns').append(`
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="${col}" name="encodeCols">
                 <label class="form-check-label small text-light">${col}</label>
             </div>
         `);
-        });
+    });
 
-        // Populate general columns
-        datasetColumns.forEach(col => {
-            $('#dateColumnSelect').append(new Option(col, col));
-            $('#mlTarget').append(new Option(col, col));
-            $('#forecastDateCol').append(new Option(col, col));
-            $('#abGroupCol').append(new Option(col, col));
-            $('#abMetricCol').append(new Option(col, col));
-
-            $('#mlPredictors').append(`
+    // Populate general columns
+    datasetColumns.forEach(col => {
+        $('#dateColumnSelect').append(new Option(col, col));
+        $('#mlTarget').append(new Option(col, col));
+        $('#forecastDateCol').append(new Option(col, col));
+        $('#abGroupCol').append(new Option(col, col));
+        $('#abMetricCol').append(new Option(col, col));
+        
+        $('#mlPredictors').append(`
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="${col}" name="mlPredictorList" checked>
                 <label class="form-check-label small text-light">${col}</label>
             </div>
         `);
-        });
+    });
 
-        // Populate hypothesis columns
-        datasetColumns.forEach(col => {
+    // Populate hypothesis columns
+    datasetColumns.forEach(col => {
+        $('#hypoCol1').append(new Option(col, col));
+        $('#hypoCol2').append(new Option(col, col));
+    });
+
+    // Handle domain algorithm updates
+    updateMlAlgos();
+    updateHypoFields();
+}
+
+function updateMlAlgos() {
+    const domain = $('#modelDomain').val();
+    const algoSelect = $('#mlAlgo');
+    algoSelect.empty();
+    
+    if (domain === 'regression') {
+        $('#mlModelConfig').removeClass('d-none');
+        $('#hypothesisConfig').addClass('d-none');
+        algoSelect.append(new Option("Linear Regression", "linear"));
+        algoSelect.append(new Option("Random Forest Regressor", "randomforest"));
+    } else if (domain === 'classification') {
+        $('#mlModelConfig').removeClass('d-none');
+        $('#hypothesisConfig').addClass('d-none');
+        algoSelect.append(new Option("Logistic Regression", "logistic"));
+        algoSelect.append(new Option("Random Forest Classifier", "randomforest"));
+    } else {
+        $('#mlModelConfig').addClass('d-none');
+        $('#hypothesisConfig').removeClass('d-none');
+    }
+}
+
+function updateHypoFields() {
+    const testType = $('#hypoTestType').val();
+    if (testType === 'chi-square') {
+        $('#hypoLabel1').text('Categorical Variable 1:');
+        $('#hypoLabel2').text('Categorical Variable 2:');
+        $('#hypoCol2Container').removeClass('d-none');
+        
+        // Reset selections to defaults if possible
+        $('#hypoCol1').empty();
+        $('#hypoCol2').empty();
+        categoricalColumns.forEach(col => {
             $('#hypoCol1').append(new Option(col, col));
             $('#hypoCol2').append(new Option(col, col));
         });
-
-        // Handle domain algorithm updates
-        updateMlAlgos();
-        updateHypoFields();
+    } else if (testType === 'anova') {
+        $('#hypoLabel1').text('Grouping Categorical Variable:');
+        $('#hypoLabel2').text('Numeric Metric Variable:');
+        $('#hypoCol2Container').removeClass('d-none');
+        
+        $('#hypoCol1').empty();
+        $('#hypoCol2').empty();
+        categoricalColumns.forEach(col => $('#hypoCol1').append(new Option(col, col)));
+        numericColumns.forEach(col => $('#hypoCol2').append(new Option(col, col)));
+    } else {
+        // t-test-ind
+        $('#hypoLabel1').text('Grouping Categorical Variable (2 labels):');
+        $('#hypoLabel2').text('Numeric Metric Variable:');
+        $('#hypoCol2Container').removeClass('d-none');
+        
+        $('#hypoCol1').empty();
+        $('#hypoCol2').empty();
+        categoricalColumns.forEach(col => $('#hypoCol1').append(new Option(col, col)));
+        numericColumns.forEach(col => $('#hypoCol2').append(new Option(col, col)));
     }
+}
 
-    function updateMlAlgos() {
-        const domain = $('#modelDomain').val();
-        const algoSelect = $('#mlAlgo');
-        algoSelect.empty();
-
-        if (domain === 'regression') {
-            $('#mlModelConfig').removeClass('d-none');
-            $('#hypothesisConfig').addClass('d-none');
-            algoSelect.append(new Option("Linear Regression", "linear"));
-            algoSelect.append(new Option("Random Forest Regressor", "randomforest"));
-        } else if (domain === 'classification') {
-            $('#mlModelConfig').removeClass('d-none');
-            $('#hypothesisConfig').addClass('d-none');
-            algoSelect.append(new Option("Logistic Regression", "logistic"));
-            algoSelect.append(new Option("Random Forest Classifier", "randomforest"));
-        } else {
-            $('#mlModelConfig').addClass('d-none');
-            $('#hypothesisConfig').removeClass('d-none');
+// Fetch columns and metadata of active file
+function loadDatasetMetadata(name) {
+    if (!name) return;
+    
+    $.getJSON(`/analytics/metadata?filename=${name}`, function(data) {
+        if (data.error) {
+            alert("Error loading metadata: " + data.error);
+            return;
         }
+        
+        activeDatasetName = name;
+        datasetColumns = data.columns;
+        numericColumns = data.numeric_columns;
+        categoricalColumns = data.categorical_columns;
+        
+        // Update dataset stats UI
+        $('#activeDatasetName').text(name);
+        $('#statRows').text(data.shape[0]);
+        $('#statCols').text(data.shape[1]);
+        $('#statNum').text(data.numeric_columns.length);
+        $('#statCat').text(data.categorical_columns.length);
+        
+        // Badges
+        $('#columnBadgeContainer').empty();
+        data.columns.forEach(col => {
+            const isNum = data.numeric_columns.includes(col);
+            const badgeClass = isNum ? 'badge-primary' : 'badge-warning text-dark';
+            $('#columnBadgeContainer').append(`<span class="badge ${badgeClass} m-1">${col}</span>`);
+        });
+        
+        $('#datasetStatsCard').removeClass('d-none');
+        populateDropdowns();
+        
+        // Log to console
+        logFeatureConsole(`Loaded dataset: ${name}\nShape: ${data.shape[0]} rows, ${data.shape[1]} columns.`);
+    });
+}
+
+function logFeatureConsole(msg) {
+    const consoleBox = $('#featureLogs');
+    const time = new Date().toLocaleTimeString();
+    consoleBox.text(`[${time}] ${msg}\n\n` + consoleBox.text());
+}
+
+// ---------------- EVENTS ----------------
+
+$(document).ready(function() {
+    // Check if there is an active file already
+    const initialFile = "{{ active_dataset }}";
+    if (initialFile && initialFile !== "None") {
+        loadDatasetMetadata(initialFile);
     }
 
-    function updateHypoFields() {
-        const testType = $('#hypoTestType').val();
-        if (testType === 'chi-square') {
-            $('#hypoLabel1').text('Categorical Variable 1:');
-            $('#hypoLabel2').text('Categorical Variable 2:');
-            $('#hypoCol2Container').removeClass('d-none');
+    $('#modelDomain').change(updateMlAlgos);
+    $('#hypoTestType').change(updateHypoFields);
 
-            // Reset selections to defaults if possible
-            $('#hypoCol1').empty();
-            $('#hypoCol2').empty();
-            categoricalColumns.forEach(col => {
-                $('#hypoCol1').append(new Option(col, col));
-                $('#hypoCol2').append(new Option(col, col));
-            });
-        } else if (testType === 'anova') {
-            $('#hypoLabel1').text('Grouping Categorical Variable:');
-            $('#hypoLabel2').text('Numeric Metric Variable:');
-            $('#hypoCol2Container').removeClass('d-none');
+    // Dataset load triggers
+    $('#loadDatasetBtn').click(function() {
+        const val = $('#datasetSelect').val();
+        if (!val) { alert("Please select a file."); return; }
+        loadDatasetMetadata(val);
+    });
 
-            $('#hypoCol1').empty();
-            $('#hypoCol2').empty();
-            categoricalColumns.forEach(col => $('#hypoCol1').append(new Option(col, col)));
-            numericColumns.forEach(col => $('#hypoCol2').append(new Option(col, col)));
-        } else {
-            // t-test-ind
-            $('#hypoLabel1').text('Grouping Categorical Variable (2 labels):');
-            $('#hypoLabel2').text('Numeric Metric Variable:');
-            $('#hypoCol2Container').removeClass('d-none');
-
-            $('#hypoCol1').empty();
-            $('#hypoCol2').empty();
-            categoricalColumns.forEach(col => $('#hypoCol1').append(new Option(col, col)));
-            numericColumns.forEach(col => $('#hypoCol2').append(new Option(col, col)));
-        }
-    }
-
-    // Fetch columns and metadata of active file
-    function loadDatasetMetadata(name) {
-        if (!name) return;
-
-        $.getJSON(`/analytics/metadata?filename=${name}`, function (data) {
+    $('#loadCaseStudyBtn').click(function() {
+        const study = $('#caseStudySelect').val();
+        if (!study) { alert("Please select a case study."); return; }
+        
+        // Trigger synthetic generation
+        $.post('/analytics/load-case-study', { study: study }, function(data) {
             if (data.error) {
-                alert("Error loading metadata: " + data.error);
-                return;
+                alert("Error: " + data.error);
+            } else {
+                loadDatasetMetadata(data.filename);
             }
-
-            activeDatasetName = name;
-            datasetColumns = data.columns;
-            numericColumns = data.numeric_columns;
-            categoricalColumns = data.categorical_columns;
-
-            // Update dataset stats UI
-            $('#activeDatasetName').text(name);
-            $('#statRows').text(data.shape[0]);
-            $('#statCols').text(data.shape[1]);
-            $('#statNum').text(data.numeric_columns.length);
-            $('#statCat').text(data.categorical_columns.length);
-
-            // Badges
-            $('#columnBadgeContainer').empty();
-            data.columns.forEach(col => {
-                const isNum = data.numeric_columns.includes(col);
-                const badgeClass = isNum ? 'badge-primary' : 'badge-warning text-dark';
-                $('#columnBadgeContainer').append(`<span class="badge ${badgeClass} m-1">${col}</span>`);
-            });
-
-            $('#datasetStatsCard').removeClass('d-none');
-            populateDropdowns();
-
-            // Log to console
-            logFeatureConsole(`Loaded dataset: ${name}\nShape: ${data.shape[0]} rows, ${data.shape[1]} columns.`);
         });
-    }
+    });
 
-    function logFeatureConsole(msg) {
-        const consoleBox = $('#featureLogs');
-        const time = new Date().toLocaleTimeString();
-        consoleBox.text(`[${time}] ${msg}\n\n` + consoleBox.text());
-    }
-
-    // ---------------- EVENTS ----------------
-
-    $(document).ready(function () {
-        // Check if there is an active file already
-        const initialFile = "{{ active_dataset }}";
-        if (initialFile && initialFile !== "None") {
-            loadDatasetMetadata(initialFile);
-        }
-
-        $('#modelDomain').change(updateMlAlgos);
-        $('#hypoTestType').change(updateHypoFields);
-
-        // Dataset load triggers
-        $('#loadDatasetBtn').click(function () {
-            const val = $('#datasetSelect').val();
-            if (!val) { alert("Please select a file."); return; }
-            loadDatasetMetadata(val);
+    // Feature engineering POST triggers
+    $('#applyScaleBtn').click(function() {
+        if (!activeDatasetName) { alert("No active dataset."); return; }
+        const scaleCols = [];
+        $('input[name="scaleCols"]:checked').each(function() { scaleCols.push($(this).val()); });
+        if (scaleCols.length === 0) { alert("Select columns to scale."); return; }
+        
+        $.post('/analytics/feature-engineering', {
+            action: 'scale',
+            columns: scaleCols,
+            method: $('#scaleType').val()
+        }, function(res) {
+            if (res.error) logFeatureConsole("Error: " + res.error);
+            else {
+                res.logs.forEach(l => logFeatureConsole(l));
+                loadDatasetMetadata(activeDatasetName);
+            }
         });
+    });
 
-        $('#loadCaseStudyBtn').click(function () {
-            const study = $('#caseStudySelect').val();
-            if (!study) { alert("Please select a case study."); return; }
-
-            // Trigger synthetic generation
-            $.post('/analytics/load-case-study', { study: study }, function (data) {
-                if (data.error) {
-                    alert("Error: " + data.error);
-                } else {
-                    loadDatasetMetadata(data.filename);
-                }
-            });
+    $('#applyEncodeBtn').click(function() {
+        if (!activeDatasetName) { alert("No active dataset."); return; }
+        const encodeCols = [];
+        $('input[name="encodeCols"]:checked').each(function() { encodeCols.push($(this).val()); });
+        if (encodeCols.length === 0) { alert("Select columns to encode."); return; }
+        
+        $.post('/analytics/feature-engineering', {
+            action: 'encode',
+            columns: encodeCols,
+            method: $('#encodeType').val()
+        }, function(res) {
+            if (res.error) logFeatureConsole("Error: " + res.error);
+            else {
+                res.logs.forEach(l => logFeatureConsole(l));
+                loadDatasetMetadata(activeDatasetName);
+            }
         });
+    });
 
-        // Feature engineering POST triggers
-        $('#applyScaleBtn').click(function () {
-            if (!activeDatasetName) { alert("No active dataset."); return; }
-            const scaleCols = [];
-            $('input[name="scaleCols"]:checked').each(function () { scaleCols.push($(this).val()); });
-            if (scaleCols.length === 0) { alert("Select columns to scale."); return; }
-
-            $.post('/analytics/feature-engineering', {
-                action: 'scale',
-                columns: scaleCols,
-                method: $('#scaleType').val()
-            }, function (res) {
-                if (res.error) logFeatureConsole("Error: " + res.error);
-                else {
-                    res.logs.forEach(l => logFeatureConsole(l));
-                    loadDatasetMetadata(activeDatasetName);
-                }
-            });
+    $('#applyDateBtn').click(function() {
+        if (!activeDatasetName) { alert("No active dataset."); return; }
+        const dtCol = $('#dateColumnSelect').val();
+        const extracts = [];
+        $('input[name="dtExtract"]:checked').each(function() { extracts.push($(this).val()); });
+        
+        $.post('/analytics/feature-engineering', {
+            action: 'datetime',
+            column: dtCol,
+            extracts: extracts
+        }, function(res) {
+            if (res.error) logFeatureConsole("Error: " + res.error);
+            else {
+                res.logs.forEach(l => logFeatureConsole(l));
+                loadDatasetMetadata(activeDatasetName);
+            }
         });
+    });
 
-        $('#applyEncodeBtn').click(function () {
-            if (!activeDatasetName) { alert("No active dataset."); return; }
-            const encodeCols = [];
-            $('input[name="encodeCols"]:checked').each(function () { encodeCols.push($(this).val()); });
-            if (encodeCols.length === 0) { alert("Select columns to encode."); return; }
-
-            $.post('/analytics/feature-engineering', {
-                action: 'encode',
-                columns: encodeCols,
-                method: $('#encodeType').val()
-            }, function (res) {
-                if (res.error) logFeatureConsole("Error: " + res.error);
-                else {
-                    res.logs.forEach(l => logFeatureConsole(l));
-                    loadDatasetMetadata(activeDatasetName);
-                }
-            });
+    $('#applyInteractionBtn').click(function() {
+        if (!activeDatasetName) { alert("No active dataset."); return; }
+        const c1 = $('#interCol1').val();
+        const c2 = $('#interCol2').val();
+        if (c1 === c2) { alert("Select distinct columns."); return; }
+        
+        $.post('/analytics/feature-engineering', {
+            action: 'interaction',
+            col1: c1,
+            col2: c2
+        }, function(res) {
+            if (res.error) logFeatureConsole("Error: " + res.error);
+            else {
+                res.logs.forEach(l => logFeatureConsole(l));
+                loadDatasetMetadata(activeDatasetName);
+            }
         });
+    });
 
-        $('#applyDateBtn').click(function () {
-            if (!activeDatasetName) { alert("No active dataset."); return; }
-            const dtCol = $('#dateColumnSelect').val();
-            const extracts = [];
-            $('input[name="dtExtract"]:checked').each(function () { extracts.push($(this).val()); });
-
-            $.post('/analytics/feature-engineering', {
-                action: 'datetime',
-                column: dtCol,
-                extracts: extracts
-            }, function (res) {
-                if (res.error) logFeatureConsole("Error: " + res.error);
-                else {
-                    res.logs.forEach(l => logFeatureConsole(l));
-                    loadDatasetMetadata(activeDatasetName);
-                }
-            });
+    $('#applyPolyBtn').click(function() {
+        if (!activeDatasetName) { alert("No active dataset."); return; }
+        const polyCols = [];
+        $('input[name="polyCols"]:checked').each(function() { polyCols.push($(this).val()); });
+        if (polyCols.length === 0) { alert("Select columns for polynomial terms."); return; }
+        
+        $.post('/analytics/feature-engineering', {
+            action: 'poly',
+            columns: polyCols,
+            degree: $('#polyDegree').val()
+        }, function(res) {
+            if (res.error) logFeatureConsole("Error: " + res.error);
+            else {
+                res.logs.forEach(l => logFeatureConsole(l));
+                loadDatasetMetadata(activeDatasetName);
+            }
         });
+    });
 
-        $('#applyInteractionBtn').click(function () {
-            if (!activeDatasetName) { alert("No active dataset."); return; }
-            const c1 = $('#interCol1').val();
-            const c2 = $('#interCol2').val();
-            if (c1 === c2) { alert("Select distinct columns."); return; }
-
-            $.post('/analytics/feature-engineering', {
-                action: 'interaction',
+    // Run statistical modeling
+    $('#runModelBtn').click(function() {
+        if (!activeDatasetName) { alert("No active dataset."); return; }
+        const domain = $('#modelDomain').val();
+        
+        if (domain === 'hypothesis') {
+            const testType = $('#hypoTestType').val();
+            const c1 = $('#hypoCol1').val();
+            const c2 = $('#hypoCol2').val();
+            
+            $.post('/analytics/model-hypothesis', {
+                test_type: testType,
                 col1: c1,
                 col2: c2
-            }, function (res) {
-                if (res.error) logFeatureConsole("Error: " + res.error);
-                else {
-                    res.logs.forEach(l => logFeatureConsole(l));
-                    loadDatasetMetadata(activeDatasetName);
-                }
-            });
-        });
-
-        $('#applyPolyBtn').click(function () {
-            if (!activeDatasetName) { alert("No active dataset."); return; }
-            const polyCols = [];
-            $('input[name="polyCols"]:checked').each(function () { polyCols.push($(this).val()); });
-            if (polyCols.length === 0) { alert("Select columns for polynomial terms."); return; }
-
-            $.post('/analytics/feature-engineering', {
-                action: 'poly',
-                columns: polyCols,
-                degree: $('#polyDegree').val()
-            }, function (res) {
-                if (res.error) logFeatureConsole("Error: " + res.error);
-                else {
-                    res.logs.forEach(l => logFeatureConsole(l));
-                    loadDatasetMetadata(activeDatasetName);
-                }
-            });
-        });
-
-        // Run statistical modeling
-        $('#runModelBtn').click(function () {
-            if (!activeDatasetName) { alert("No active dataset."); return; }
-            const domain = $('#modelDomain').val();
-
-            if (domain === 'hypothesis') {
-                const testType = $('#hypoTestType').val();
-                const c1 = $('#hypoCol1').val();
-                const c2 = $('#hypoCol2').val();
-
-                $.post('/analytics/model-hypothesis', {
-                    test_type: testType,
-                    col1: c1,
-                    col2: c2
-                }, function (res) {
-                    if (res.error) { alert("Error: " + res.error); return; }
-
-                    $('#modelOutputPlaceholder').removeClass('d-flex').addClass('d-none');
-                    $('#modelResultsContainer').removeClass('d-none');
-                    $('#modelFeatureImpacts').addClass('d-none');
-
-                    let html = `
+            }, function(res) {
+                if (res.error) { alert("Error: " + res.error); return; }
+                
+                $('#modelOutputPlaceholder').addClass('d-none');
+                $('#modelResultsContainer').removeClass('d-none');
+                $('#modelFeatureImpacts').addClass('d-none');
+                
+                let html = `
                     <div class="alert alert-info">
                         <h5><b>Test Results: ${res.test_name}</b></h5>
                         <p class="mb-1"><b>${res.stat_name}:</b> ${res.stat.toFixed(4)}</p>
@@ -846,205 +843,201 @@
                         <p class="mb-0"> ${res.interpretation}</p>
                     </div>
                 `;
-                    $('#modelMetricsSummary').html(html);
-
-                    // Set layout grid for single chart
-                    $('#modelChart1Container').removeClass('col-md-6').addClass('col-12');
-                    $('#modelChart2Container').addClass('d-none');
-
-                    const fig = JSON.parse(res.chart);
-                    Plotly.newPlot('modelChart1', fig.data, fig.layout);
-                });
-            } else {
-                // Regression or Classification
-                const target = $('#mlTarget').val();
-                const predictors = [];
-                $('input[name="mlPredictorList"]:checked').each(function () { predictors.push($(this).val()); });
-
-                if (predictors.length === 0) { alert("Select at least one predictor."); return; }
-                if (predictors.includes(target)) { alert("Predictors cannot contain target variable."); return; }
-
-                $.post('/analytics/model-fit', {
-                    domain: domain,
-                    algo: $('#mlAlgo').val(),
-                    target: target,
-                    predictors: predictors
-                }, function (res) {
-                    if (res.error) { alert("Error: " + res.error); return; }
-
-                    $('#modelOutputPlaceholder').removeClass('d-flex').addClass('d-none');
-                    $('#modelResultsContainer').removeClass('d-none');
-                    $('#modelFeatureImpacts').removeClass('d-none');
-
-                    // Show statistics summary
-                    let html = `<h5><b>Model Run: ${res.model_name}</b></h5><div class="row text-center mt-2">`;
-                    if (domain === 'regression') {
-                        html += `
+                $('#modelMetricsSummary').html(html);
+                
+                // Set layout grid for single chart
+                $('#modelChart1Container').removeClass('col-md-6').addClass('col-12');
+                $('#modelChart2Container').addClass('d-none');
+                
+                const fig = JSON.parse(res.chart);
+                Plotly.newPlot('modelChart1', fig.data, fig.layout);
+            });
+        } else {
+            // Regression or Classification
+            const target = $('#mlTarget').val();
+            const predictors = [];
+            $('input[name="mlPredictorList"]:checked').each(function() { predictors.push($(this).val()); });
+            
+            if (predictors.length === 0) { alert("Select at least one predictor."); return; }
+            if (predictors.includes(target)) { alert("Predictors cannot contain target variable."); return; }
+            
+            $.post('/analytics/model-fit', {
+                domain: domain,
+                algo: $('#mlAlgo').val(),
+                target: target,
+                predictors: predictors
+            }, function(res) {
+                if (res.error) { alert("Error: " + res.error); return; }
+                
+                $('#modelOutputPlaceholder').addClass('d-none');
+                $('#modelResultsContainer').removeClass('d-none');
+                $('#modelFeatureImpacts').removeClass('d-none');
+                
+                // Show statistics summary
+                let html = `<h5><b>Model Run: ${res.model_name}</b></h5><div class="row text-center mt-2">`;
+                if (domain === 'regression') {
+                    html += `
                         <div class="col-4"><div class="bg-dark p-2 rounded small">R² Score<br><h5 class="fw-bold text-success">${res.r2.toFixed(4)}</h5></div></div>
                         <div class="col-4"><div class="bg-dark p-2 rounded small">RMSE<br><h5 class="fw-bold text-warning">${res.rmse.toFixed(4)}</h5></div></div>
                         <div class="col-4"><div class="bg-dark p-2 rounded small">MAE<br><h5 class="fw-bold text-info">${res.mae.toFixed(4)}</h5></div></div>
                     `;
-                    } else {
-                        html += `
+                } else {
+                    html += `
                         <div class="col-3"><div class="bg-dark p-2 rounded small">Accuracy<br><h5 class="fw-bold text-success">${res.accuracy.toFixed(4)}</h5></div></div>
                         <div class="col-3"><div class="bg-dark p-2 rounded small">Precision<br><h5 class="fw-bold text-warning">${res.precision.toFixed(4)}</h5></div></div>
                         <div class="col-3"><div class="bg-dark p-2 rounded small">Recall<br><h5 class="fw-bold text-info">${res.recall.toFixed(4)}</h5></div></div>
                         <div class="col-3"><div class="bg-dark p-2 rounded small">F1 Score<br><h5 class="fw-bold text-primary">${res.f1.toFixed(4)}</h5></div></div>
                     `;
-                    }
-                    html += `</div>`;
-                    $('#modelMetricsSummary').html(html);
-
-                    // Set charts
-                    $('#modelChart1Container').removeClass('col-12').addClass('col-md-6');
-                    $('#modelChart2Container').removeClass('d-none');
-
-                    if (domain === 'regression') {
-                        const fig1 = JSON.parse(res.pred_chart);
-                        const fig2 = JSON.parse(res.res_chart);
-                        Plotly.newPlot('modelChart1', fig1.data, fig1.layout);
+                }
+                html += `</div>`;
+                $('#modelMetricsSummary').html(html);
+                
+                // Set charts
+                $('#modelChart1Container').removeClass('col-12').addClass('col-md-6');
+                $('#modelChart2Container').removeClass('d-none');
+                
+                if (domain === 'regression') {
+                    const fig1 = JSON.parse(res.pred_chart);
+                    const fig2 = JSON.parse(res.res_chart);
+                    Plotly.newPlot('modelChart1', fig1.data, fig1.layout);
+                    Plotly.newPlot('modelChart2', fig2.data, fig2.layout);
+                } else {
+                    const fig1 = JSON.parse(res.cm_chart);
+                    Plotly.newPlot('modelChart1', fig1.data, fig1.layout);
+                    if (res.roc_chart) {
+                        const fig2 = JSON.parse(res.roc_chart);
                         Plotly.newPlot('modelChart2', fig2.data, fig2.layout);
                     } else {
-                        const fig1 = JSON.parse(res.cm_chart);
-                        Plotly.newPlot('modelChart1', fig1.data, fig1.layout);
-                        if (res.roc_chart) {
-                            const fig2 = JSON.parse(res.roc_chart);
-                            Plotly.newPlot('modelChart2', fig2.data, fig2.layout);
-                        } else {
-                            $('#modelChart2Container').addClass('d-none');
-                        }
+                        $('#modelChart2Container').addClass('d-none');
                     }
-
-                    // Feature importances
-                    $('#modelImpactBody').empty();
-                    res.feature_impacts.forEach(imp => {
-                        let metricVal = imp.Importance !== undefined ? imp.Importance.toFixed(4) : imp.Coefficient.toFixed(4);
-                        $('#modelImpactBody').append(`
+                }
+                
+                // Feature importances
+                $('#modelImpactBody').empty();
+                res.feature_impacts.forEach(imp => {
+                    let metricVal = imp.Importance !== undefined ? imp.Importance.toFixed(4) : imp.Coefficient.toFixed(4);
+                    $('#modelImpactBody').append(`
                         <tr>
                             <td><b>${imp.Feature}</b></td>
                             <td>${metricVal}</td>
                         </tr>
                     `);
-                    });
                 });
-            }
-        });
-
-        // Run forecasting
-        $('#runForecastBtn').click(function () {
-            if (!activeDatasetName) { alert("No active dataset."); return; }
-
-            $.post('/analytics/forecast', {
-                date_col: $('#forecastDateCol').val(),
-                target_col: $('#forecastTargetCol').val(),
-                horizon: $('#forecastHorizon').val(),
-                model: $('#forecastModel').val()
-            }, function (res) {
-                if (res.error) { alert("Error: " + res.error); return; }
-
-                $('#forecastPlaceholder').removeClass('d-flex').addClass('d-none');
-                $('#forecastResultsContainer').removeClass('d-none');
-
-                $('#forecastRMSE').text(res.rmse.toFixed(4));
-                $('#forecastMAE').text(res.mae.toFixed(4));
-
-                const fig = JSON.parse(res.chart);
-                Plotly.newPlot('forecastChart', fig.data, fig.layout);
             });
-        });
+        }
+    });
 
-        // A/B Test Manual Calculator
-        $('#runABCalcBtn').click(function () {
-            const ca = parseInt($('#abConvsA').val());
-            const sa = parseInt($('#abSizeA').val());
-            const cb = parseInt($('#abConvsB').val());
-            const sb = parseInt($('#abSizeB').val());
-            const cl = parseFloat($('#abConfLevel').val());
-
-            if (ca > sa || cb > sb) { alert("Conversions cannot exceed visitors!"); return; }
-
-            $.post('/analytics/ab-calc', {
-                conv_a: ca, size_a: sa,
-                conv_b: cb, size_b: sb,
-                conf_level: cl
-            }, function (res) {
-                if (res.error) { alert("Error: " + res.error); return; }
-
-                $('#abPlaceholder').removeClass('d-flex').addClass('d-none');
-                $('#abResultsContainer').removeClass('d-none');
-
-                $('#abLiftVal').text((res.lift * 100).toFixed(2) + "%");
-                $('#abPval').text(res.p_value.toFixed(5));
-                $('#abStat').text(res.z_statistic.toFixed(4));
-
-                const alertClass = res.is_significant ? 'alert-success' : 'alert-warning';
-                const alertText = res.is_significant
-                    ? ` <b>Statistically Significant!</b> Variant B shows a significant conversion lift over Variant A.`
-                    : ` <b>No Statistical Difference.</b> The conversion rate differences are not strong enough to rule out random chance.`;
-                $('#abAlertBox').removeClass('alert-success alert-warning').addClass(alertClass).html(alertText);
-
-                const fig = JSON.parse(res.chart);
-                Plotly.newPlot('abChart', fig.data, fig.layout);
-            });
-        });
-
-        // A/B Test Dataset Analyzer
-        $('#runABDatasetBtn').click(function () {
-            if (!activeDatasetName) { alert("No active dataset loaded."); return; }
-
-            $.post('/analytics/ab-dataset', {
-                group_col: $('#abGroupCol').val(),
-                metric_col: $('#abMetricCol').val(),
-                conf_level: $('#abDataConfLevel').val()
-            }, function (res) {
-                if (res.error) { alert("Error: " + res.error); return; }
-
-                $('#abPlaceholder').removeClass('d-flex').addClass('d-none');
-                $('#abResultsContainer').removeClass('d-none');
-
-                $('#abLiftVal').text((res.lift * 100).toFixed(2) + "%");
-                $('#abPval').text(res.p_value.toFixed(5));
-                $('#abStat').text(res.t_statistic !== undefined ? res.t_statistic.toFixed(4) : res.z_statistic.toFixed(4));
-
-                const alertClass = res.is_significant ? 'alert-success' : 'alert-warning';
-                const alertText = res.is_significant
-                    ? ` <b>Statistically Significant!</b> Group '${res.group_b_name}' has a significant change in metric over Group '${res.group_a_name}'.`
-                    : ` <b>No Statistical Difference.</b> The metric variation between groups is not significant.`;
-                $('#abAlertBox').removeClass('alert-success alert-warning').addClass(alertClass).html(alertText);
-
-                const fig = JSON.parse(res.chart);
-                Plotly.newPlot('abChart', fig.data, fig.layout);
-            });
+    // Run forecasting
+    $('#runForecastBtn').click(function() {
+        if (!activeDatasetName) { alert("No active dataset."); return; }
+        
+        $.post('/analytics/forecast', {
+            date_col: $('#forecastDateCol').val(),
+            target_col: $('#forecastTargetCol').val(),
+            horizon: $('#forecastHorizon').val(),
+            model: $('#forecastModel').val()
+        }, function(res) {
+            if (res.error) { alert("Error: " + res.error); return; }
+            
+            $('#forecastPlaceholder').addClass('d-none');
+            $('#forecastResultsContainer').removeClass('d-none');
+            
+            $('#forecastRMSE').text(res.rmse.toFixed(4));
+            $('#forecastMAE').text(res.mae.toFixed(4));
+            
+            const fig = JSON.parse(res.chart);
+            Plotly.newPlot('forecastChart', fig.data, fig.layout);
         });
     });
+
+    // A/B Test Manual Calculator
+    $('#runABCalcBtn').click(function() {
+        const ca = parseInt($('#abConvsA').val());
+        const sa = parseInt($('#abSizeA').val());
+        const cb = parseInt($('#abConvsB').val());
+        const sb = parseInt($('#abSizeB').val());
+        const cl = parseFloat($('#abConfLevel').val());
+        
+        if (ca > sa || cb > sb) { alert("Conversions cannot exceed visitors!"); return; }
+        
+        $.post('/analytics/ab-calc', {
+            conv_a: ca, size_a: sa,
+            conv_b: cb, size_b: sb,
+            conf_level: cl
+        }, function(res) {
+            if (res.error) { alert("Error: " + res.error); return; }
+            
+            $('#abPlaceholder').addClass('d-none');
+            $('#abResultsContainer').removeClass('d-none');
+            
+            $('#abLiftVal').text((res.lift * 100).toFixed(2) + "%");
+            $('#abPval').text(res.p_value.toFixed(5));
+            $('#abStat').text(res.z_statistic.toFixed(4));
+            
+            const alertClass = res.is_significant ? 'alert-success' : 'alert-warning';
+            const alertText = res.is_significant 
+                ? ` <b>Statistically Significant!</b> Variant B shows a significant conversion lift over Variant A.`
+                : ` <b>No Statistical Difference.</b> The conversion rate differences are not strong enough to rule out random chance.`;
+            $('#abAlertBox').removeClass('alert-success alert-warning').addClass(alertClass).html(alertText);
+            
+            const fig = JSON.parse(res.chart);
+            Plotly.newPlot('abChart', fig.data, fig.layout);
+        });
+    });
+
+    // A/B Test Dataset Analyzer
+    $('#runABDatasetBtn').click(function() {
+        if (!activeDatasetName) { alert("No active dataset loaded."); return; }
+        
+        $.post('/analytics/ab-dataset', {
+            group_col: $('#abGroupCol').val(),
+            metric_col: $('#abMetricCol').val(),
+            conf_level: $('#abDataConfLevel').val()
+        }, function(res) {
+            if (res.error) { alert("Error: " + res.error); return; }
+            
+            $('#abPlaceholder').addClass('d-none');
+            $('#abResultsContainer').removeClass('d-none');
+            
+            $('#abLiftVal').text((res.lift * 100).toFixed(2) + "%");
+            $('#abPval').text(res.p_value.toFixed(5));
+            $('#abStat').text(res.t_statistic !== undefined ? res.t_statistic.toFixed(4) : res.z_statistic.toFixed(4));
+            
+            const alertClass = res.is_significant ? 'alert-success' : 'alert-warning';
+            const alertText = res.is_significant 
+                ? ` <b>Statistically Significant!</b> Group '${res.group_b_name}' has a significant change in metric over Group '${res.group_a_name}'.`
+                : ` <b>No Statistical Difference.</b> The metric variation between groups is not significant.`;
+            $('#abAlertBox').removeClass('alert-success alert-warning').addClass(alertClass).html(alertText);
+            
+            const fig = JSON.parse(res.chart);
+            Plotly.newPlot('abChart', fig.data, fig.layout);
+        });
+    });
+});
 </script>
+
 <style>
-    .checkbox-list {
-        background-color: #1a1a1a !important;
-    }
-
-    .checkbox-list label {
-        margin-bottom: 0;
-        cursor: pointer;
-    }
-
-    .text-light-50 {
-        color: rgba(255, 255, 255, 0.6) !important;
-    }
-
-    .nav-tabs .nav-link {
-        font-weight: 500;
-    }
-
-    .nav-tabs .nav-link.active {
-        border-bottom: 3px solid #00f2fe !important;
-        background-color: #212529 !important;
-    }
-
-    .text-gradient {
-        background: linear-gradient(135deg, #00ff88 0%, #00c6ff 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+.checkbox-list {
+    background-color: #1a1a1a !important;
+}
+.checkbox-list label {
+    margin-bottom: 0;
+    cursor: pointer;
+}
+.text-light-50 {
+    color: rgba(255,255,255,0.6) !important;
+}
+.nav-tabs .nav-link {
+    font-weight: 500;
+}
+.nav-tabs .nav-link.active {
+    border-bottom: 3px solid #00f2fe !important;
+    background-color: #212529 !important;
+}
+.text-gradient {
+    background: linear-gradient(135deg, #00ff88 0%, #00c6ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 </style>
 {% endblock %}
