@@ -16,14 +16,14 @@ graph TD
     API --> AE[Analytics Engine<br/>Pandas / Scikit Learn]
     API --> Agents[AI Agent Orchestrator]
     
-    subgraph Deterministic Core
+    subgraph DC [Deterministic Core]
         AE --> FE[Feature Engineering]
         AE --> ML[Statistical Modeling]
         AE --> TS[Time Series Forecasting]
         AE --> AB[A/B Testing]
     end
     
-    subgraph Agentic Layer
+    subgraph AL [Agentic Layer]
         Agents --> DU[Data Understanding Agent]
         Agents --> DP[Data Preparation Agent]
         Agents --> MLE[ML Engineer Agent]
@@ -34,7 +34,7 @@ graph TD
         MLE -.-> Rep
     end
     
-    Deterministic Core <--> Agentic Layer
+    DC <--> AL
 ```
 
 ---
