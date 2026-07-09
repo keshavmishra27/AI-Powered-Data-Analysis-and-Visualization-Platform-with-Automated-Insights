@@ -23,7 +23,7 @@ def generate_churn_data(n_samples=800):
     partner = np.random.choice(["Yes", "No"], size=n_samples)
     dependents = np.random.choice(["Yes", "No"], size=n_samples, p=[0.7, 0.3])
     
-    # Tenure has a bi-modal distribution
+    # Tenure has a bi modal distribution
     tenure = np.concatenate([
         np.random.randint(1, 12, size=n_samples // 2),
         np.random.randint(48, 72, size=n_samples // 2)
@@ -70,7 +70,7 @@ def generate_churn_data(n_samples=800):
             base += 30.0
         elif iserv == "Fiber optic":
             base += 60.0
-        # Add random add-on pricing
+        # Add random add on pricing
         monthly_charges.append(base + np.random.uniform(5.0, 25.0))
     monthly_charges = np.array(monthly_charges)
     
@@ -187,7 +187,7 @@ def generate_sales_data():
     weekday_effect = {0: -100, 1: -150, 2: -120, 3: -50, 4: 150, 5: 300, 6: 250} # 0=Monday
     season_week = np.array([weekday_effect[d.weekday()] for d in dates])
     
-    # Yearly seasonality: Sales peak in Summer (July-August) and Winter Holidays (December)
+    # Yearly seasonality: Sales peak in Summer (July August) and Winter Holidays (December)
     season_year = 200 * np.sin(2 * np.pi * dates.dayofyear / 365.25)
     december_boost = np.array([150 if d.month == 12 else 0 for d in dates])
     
@@ -431,7 +431,7 @@ def run_classification_modeling(df, target, predictors, model_type="logistic"):
     X = df_clean[predictors]
     y = df_clean[target]
     
-    # Encode Target if it is non-numeric
+    # Encode Target if it is non numeric
     le = LabelEncoder()
     if y.dtype == object or y.dtype == bool:
         y = le.fit_transform(y.astype(str))
@@ -558,7 +558,7 @@ def run_hypothesis_testing(df, test_type, col1, col2=None):
         }
         
     elif test_type == "anova":
-        # One-way ANOVA (Categorical col1, Numeric col2)
+        # One way ANOVA (Categorical col1, Numeric col2)
         group_col = col1
         target_col = col2
         df_clean = df[[group_col, target_col]].dropna()
@@ -623,8 +623,14 @@ def run_hypothesis_testing(df, test_type, col1, col2=None):
 
 def run_timeseries_forecasting(df, date_col, target_col, model_type="holt_linear", horizon=30):
     """Aggregates date values and projects them into the future with dynamic models."""
-    df_clean = df[[date_col, target_col]].dropna()
-    df_clean[date_col] = pd.to_datetime(df_clean[date_col])
+    df_clean = df[[date_col, target_col]].dropna(subset=[target_col]).copy()
+    try:
+        df_clean[date_col] = pd.to_datetime(df_clean[date_col], format='mixed')
+    except Exception:
+        # Fallback for older pandas or extreme cases
+        df_clean[date_col] = pd.to_datetime(df_clean[date_col], errors='coerce')
+    
+    df_clean = df_clean.dropna(subset=[date_col])
     
     # Sort and aggregate by date to avoid duplicates
     df_ts = df_clean.groupby(date_col)[target_col].mean().asfreq('D')
@@ -763,7 +769,7 @@ def run_ab_test_proportions(conv_a, size_a, conv_b, size_b, conf_level=0.95):
     se = np.sqrt(p_pooled * (1 - p_pooled) * (1/size_a + 1/size_b))
     
     z_stat = (p_b - p_a) / se if se > 0 else 0.0
-    # Two-tailed p-value
+    # Two tailed p value
     pval = 2 * (1 - stats.norm.cdf(abs(z_stat)))
     
     # Standard errors of individual groups

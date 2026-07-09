@@ -1,0 +1,30 @@
+analytics.html:845: <p class="mb-0">💡 ${res.interpretation}</p>
+analytics.html:981: ? `🚀 <b>Statistically Significant!</b> Variant B shows a significant conversion lift over Variant A.`
+analytics.html:1010: ? `🚀 <b>Statistically Significant!</b> Group '${res.group_b_name}' has a significant change in metric over Group '${res.group_a_name}'.`
+configure.html:6: <!-- 🔹 Schema Mapping -->
+configure.html:38: <!-- 🔹 Imputation Method -->
+configure.html:46: <small class="text-muted">💡 AI suggested: {{ ai_suggest.get("imputation_method", "mean") }}</small>
+configure.html:47: <!-- 🔹 Outlier Detection -->
+configure.html:55: <small class="text-muted">💡 AI suggested: {{ ai_suggest.get("outlier_method", "none") }}</small>
+configure.html:56: <!-- 🔹 Business Rules -->
+configure.html:69: <small class="text-muted">💡 AI suggested {{ ai_suggest.get("rules")|length }} rules above.</small>
+configure.html:70: <!-- 🔹 Weight Column -->
+configure.html:78: <small class="text-muted">💡 AI suggested: {{ ai_suggest.get("weight_column", "None") }}</small>
+configure.html:79: <!-- 🔹 AI Imputation -->
+configure.html:84: <!-- 🔹 Actions -->
+home.html:47: <h1 class="hero-display" id="main-title">🚀 Stathon 2025 Project</h1>
+home.html:139: upload:"🚀 Ready to upload your data files! Our smart system handles CSV, JSON, and Excel formats.",
+home.html:140: analyze:"🧠 Our AI will analyze your data patterns and generate beautiful visualizations!"
+home.html:153: "💡 Tip: Try clicking on the title!",
+home.html:154: "🎯 Click on feature cards to learn more!",
+home.html:156: "🚀 Ready to transform your data?",
+home.html:157: "📊 Upload files up to 100MB!"
+leaderboard.html:8: <h2 class="mb-4 text-center animate__animated animate__fadeInDown">🏆 Leaderboard (by score)</h2>
+leaderboard.html:37: <strong>📌 Your Rank:</strong> {{ current_rank }}
+visualize.html:7: <h2 class="text-center mb-4 text-gradient">📈 AI Augmented Visualization</h2>
+visualize.html:22: <button class="btn btn-light" id="updateChart">🔄 Update Chart</button>
+visualize.html:33: <h4 class="fw-bold text-success">📊 Dataset Summary</h4>
+visualize.html:42: 💡 <b>AI Insight:</b> {{ dataset_summary.insight }}
+visualize.html:50: <h4 class="fw-bold text-info">📋 Column wise AI Insights</h4>
+visualize.html:83: 💡 View Insight
+visualize.html:101: <h4 class="fw-bold text-primary">📂 Data Preview</h4>

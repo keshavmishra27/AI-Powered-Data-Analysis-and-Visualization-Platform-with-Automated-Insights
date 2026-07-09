@@ -1,166 +1,133 @@
-# AI-Powered Data Analysis & Visualization Platform
+# Insight Forge Stathon 2025 Project
 
-End to end AI platform that automates data ingestion, preprocessing, analysis, model evaluation, and visualization to deliver actionable insights with minimal manual effort. Designed to help teams quickly move from raw data to decision ready insights.
+Insight Forge has evolved into an **Advanced Analytics Studio** and **AI powered tabular data intelligence platform** designed for comprehensive data science workflows.
 
----
-
-##  Key Features
-
-| Category | Feature Description |
-| :--- | :--- |
-| **Ingestion** | Seamless upload of CSV and Excel (`.xlsx`, `.xls`) files. |
-| **Preprocessing** | Smart data cleaning, missing value handling, and outlier detection. |
-| **EDA & Visuals** | Automated Exploratory Data Analysis (EDA) with interactive Plotly visualizations. |
-| **Advanced Analytics** | Feature engineering, hypothesis testing (A/B testing, ANOVA, Chi-Square), and time series forecasting. |
-| **Machine Learning** | Baseline model training (Regression, Classification) using Scikit-Learn pipelines. |
-| **Business Case Studies** | Interactive, simulated case studies (Customer Churn, RFM Segmentation, Sales Forecasting, Price Elasticity) to demonstrate real-world business impact. |
-| **Export & Reports** | Downloadable comprehensive PDF reports (powered by ReportLab) and clean CSV datasets. |
+The architecture shifts away from synthetic datasets and hardcoded rulebooks into a flexible pipeline that combines multi agent intelligence with a rich suite of statistical and analytical tools.
 
 ---
 
-##  System Architecture
+## System Architecture
 
-The platform follows a robust Client Server architecture, separating the interactive web frontend from the heavy data-processing backend.
-
-```mermaid
-graph LR
-    classDef frontend fill:#ffe0b2,stroke:#f57c00,stroke-width:2px,color:#333;
-    classDef backend fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,color:#333;
-    classDef data fill:#b3e5fc,stroke:#0288d1,stroke-width:2px,color:#333;
-    classDef file fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#333;
-
-    UI[Frontend UI<br/>HTML/CSS/JS & Plotly]:::frontend <--> API[Flask Backend API<br/>App Router]:::backend
-    API <--> DB[(SQLite DB<br/>Auth & State)]:::data
-    API <--> Core[Data Engine<br/>Pandas & NumPy]:::data
-    API <--> ML[AI & ML Engine<br/>Scikit-Learn / Statsmodels]:::data
-    Core --> Reports[PDF Generator<br/>ReportLab]:::file
-    Core --> Storage[Local File System<br/>Processed CSVs/Plots]:::file
-```
-
----
-
-##  System Workflow
-
-The user journey is fully automated, translating raw unstructured tabular data into highly readable charts and actionable insights.
+The system operates on a dual layer architecture: a **Deterministic Core** for rigid statistical calculations and an **Agentic Layer** for LLM driven decision making and reporting.
 
 ```mermaid
 graph TD
-    classDef ingest fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
-    classDef process fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
-    classDef analyze fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
-    classDef output fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
-
-    A([User Uploads CSV/Excel]):::ingest --> B[Data Validation & Encoding Check]:::ingest
-    B --> C{Contains Numeric Data?}:::process
+    UI[Frontend User Interface<br/>HTML / CSS / JS / Plotly] --> API[Flask Backend API]
+    API --> AE[Analytics Engine<br/>Pandas / Scikit Learn]
+    API --> Agents[AI Agent Orchestrator]
     
-    C -->|Yes| D[Outlier Detection & Imputation]:::process
-    C -->|No| E[Categorical Frequency Analysis]:::process
+    subgraph Deterministic Core
+        AE --> FE[Feature Engineering]
+        AE --> ML[Statistical Modeling]
+        AE --> TS[Time Series Forecasting]
+        AE --> AB[A/B Testing]
+    end
     
-    D --> F[Automated EDA & Correlation Heatmaps]:::analyze
-    E --> G[Categorical Bar Charts & Modes]:::analyze
+    subgraph Agentic Layer
+        Agents --> DU[Data Understanding Agent]
+        Agents --> DP[Data Preparation Agent]
+        Agents --> MLE[ML Engineer Agent]
+        Agents --> Rep[Reporting Agent]
+        
+        DU -.-> DP
+        DP -.-> MLE
+        MLE -.-> Rep
+    end
     
-    F --> H[AI Insight Narrative Generation]:::analyze
-    G --> H
-    
-    H --> I[Interactive Dashboard Rendering]:::output
-    H --> J[Export Downloadable PDF Report]:::output
+    Deterministic Core <--> Agentic Layer
 ```
 
 ---
 
-##  Technology Stack
+## Data Processing Flowchart
 
-| Component | Technology | Role |
-| :--- | :--- | :--- |
-| **Backend Framework** | `Flask` | API routing, session management, and server logic |
-| **Data Engine** | `Pandas` / `NumPy` | DataFrame manipulation, CSV/Excel reading, aggregation |
-| **Machine Learning** | `Scikit-Learn` | Classification, regression, and clustering algorithms |
-| **Statistical Modeling** | `Statsmodels` / `SciPy` | Hypothesis testing, A/B testing, and time-series forecasting |
-| **Data Visualization** | `Plotly` / `Matplotlib` | Interactive web charts and static plots for PDF reports |
-| **Report Generation** | `ReportLab` | Creating robust, styled A4 PDF documents dynamically |
-| **Frontend Styling** | `Bootstrap` / `jQuery` | Responsive layout and asynchronous AJAX interactions |
+Below is the standard workflow of how data moves from upload to final analytical insights:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant Backend
+    participant ML_Engine
+    participant AI_Agents
+
+    User->>Frontend: Uploads CSV/Excel
+    Frontend->>Backend: Sends Data
+    Backend->>AI_Agents: Trigger Data Understanding
+    AI_Agents-->>Backend: Data Quality Report & Schema
+    Backend->>Frontend: Display Quality Score & Diagnostics
+    
+    User->>Frontend: Requests Feature Engineering
+    Frontend->>Backend: Scaling / Encoding / Interaction
+    Backend->>ML_Engine: Process Transformations
+    ML_Engine-->>Backend: Transformed Dataset
+    Backend-->>Frontend: Update Active Dataset
+    
+    User->>Frontend: Executes Model / Forecast / A/B Test
+    Frontend->>Backend: Model Parameters
+    Backend->>ML_Engine: Train & Evaluate
+    ML_Engine-->>Backend: Metrics & Plotly JSON
+    Backend-->>Frontend: Render Interactive Visualizations
+```
 
 ---
 
-##  Project Structure
+## 🛠️ Technology Stack
+
+| Layer | Technologies Used | Purpose |
+| :--- | :--- | :--- |
+| **Frontend** | HTML5, CSS3, JavaScript, Bootstrap, AOS | Responsive UI and animations |
+| **Visualization** | Plotly.js | Interactive charts and diagnostic plots |
+| **Backend** | Python, Flask, Werkzeug | API routing and server management |
+| **Data Science Core** | Pandas, Scikit Learn, SciPy, Statsmodels | Data manipulation, ML training, statistics |
+| **AI / LLM** | Ollama, Local LLMs (TinyLlama/Llama 3) | Intelligent agents and NLP generation |
+
+---
+
+## Core Features & Analytics Studio
+
+### 1. Advanced Analytics Studio
+- **Dataset Selection**: Seamlessly load and switch between uploaded datasets or synthetic case studies.
+- **Feature Engineering**: Perform critical transformations including scaling (Standard, MinMax), categorical encoding (One Hot, Label), datetime decomposition, and generating interaction/polynomial terms.
+- **Statistical Modeling**: Run comprehensive Regression and Classification models, featuring dynamic performance diagnostics (R², RMSE, Accuracy, Precision) and interactive Plotly visualizations (Residuals, Confusion Matrices, ROC curves).
+- **Hypothesis Testing**: Conduct T Tests, ANOVA, and Chi Square tests to derive statistically rigorous insights.
+- **Time Series Forecasting**: Project target variables into the future using Holt Linear, Simple Exponential Smoothing (SES), or Time Index Linear Regression models.
+- **A/B Testing**: Evaluate experiment results through a Manual Calculator (Z Test) or a Dataset Driven Analyzer with detailed lift and statistical significance reporting.
+
+### 2. Multi Agent Pipeline
+
+| Agent | Module | Primary Responsibilities |
+| :--- | :--- | :--- |
+| **Data Understanding** | `agents/data_understanding.py` | Computes deterministic Data Quality Scores and translates schema implications into human readable text. |
+| **Data Preparation** | `agents/data_preparation.py` | Suggests and applies dynamic data cleaning techniques, tracking quality shifts before and after processing. |
+| **ML Engineer** | `agents/ml_engineer.py` | Identifies analytical goals, prevents target leakage, selects appropriate algorithms, and benchmarks models. |
+| **Reporting** | `agents/reporting.py` | Generates LLM grounded JSON Confidence Reports, describing model reliability, reasons for confidence, and actionable warnings. |
+
+---
+
+## Project Structure
 
 ```text
-AI Powered Data Analysis Platform/
-│
-├── README.md                 # Project Documentation
-├── run.py                    # Application Entry Point
-├── requirements.txt          # Python Dependencies
-├── .env                      # Environment Variables
-│
-├── backend/                  # Flask Application Root
-│   ├── app.py                # Main application logic & routes
-│   ├── config.py             # App configuration settings
-│   ├── credentials.py        # Authentication/DB config
-│   ├── forms.py              # WTForms definitions
-│   ├── __init__db.py         # Database initialization scripts
-│   ├── static/               # CSS & JS assets
-│   ├── templates/            # Jinja2 HTML templates
-│   │   ├── base.html         # Base layout
-│   │   ├── upload.html       # File upload page
-│   │   ├── result.html       # Automated insights dashboard
-│   │   ├── visualize.html    # Interactive Plotly UI
-│   │   ├── configure.html    # Preprocessing configuration
-│   │   ├── analytics.html    # Advanced Analytics Studio
-│   │   ├── case_studies.html # Business Case Studies directory
-│   │   └── case_study_detail.html # Interactive case study simulations
-│   └── uploads/              # Raw user uploads directory
-│
-├── instance/                 # SQLite Database storage
-├── processed/                # Output Directory
-│   ├── plots/                # Matplotlib figures for PDF
-│   └── *_report.pdf          # Final generated reports
-└── __pycache__/  
+backend/
+├── agents/             # High level orchestration agents (ML Engineer, Data Prep, etc.)
+├── core/               # Low level deterministic ML logic (pandas/scikit learn)
+├── exports/            # Export utilities (Excel, PDF, pipeline JSON)
+├── llm/                # LLM prompting and structured JSON parsing
+├── templates/          # User facing frontend views (Stathon 2025 styled)
+└── analytics_engine.py # Core engine for modeling, forecasting, and hypothesis testing
 ```
 
 ---
 
-##  Quickstart Guide
+## Running the App
 
-### Prerequisites
-- Python 3.9+ (Python 3.13 supported)
-- Git
+```bash
+# Set up environment
+pip install -r requirements.txt
 
-### Installation
+# (Optional) For local AI fallback, requires Ollama running with `tinyllama`
+ollama run tinyllama
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/keshavmishra27/AI-Powered-Data-Analysis-and-Visualization-Platform-with-Automated-Insights.git
-   
-   cd AI-Powered-Data-Analysis-and-Visualization-Platform-with-Automated-Insights
-   ```
-
-2. **Create and activate a virtual environment:**
-   - **macOS / Linux:**
-     ```bash
-     python -m venv venv
-     source venv/bin/activate
-     ```
-   - **Windows:**
-     ```powershell
-     python -m venv venv
-     venv\Scripts\activate
-     ```
-
-3. **Install dependencies:**
-   ```bash
-   pip install -r backend/requirements.txt
-   ```
-
-4. **Run the Application:**
-   ```bash
-   python run.py
-   ```
-
-5. **Start Analyzing:**
-   Open [http://localhost:5000](http://localhost:5000) in your browser. Register an account, upload a dataset (`.csv` or `.xlsx`), and let the AI build your dashboard!
-
----
-
-##  Impact
-- **60% Time Saved:** Drastically reduces manual analysis workload by automating standard preprocessing and reporting.
-- **Decision Ready:** Helps non-technical teams rapidly convert raw data into actionable PDF reports and interactive charts.
+# Run server
+python app.py
+```

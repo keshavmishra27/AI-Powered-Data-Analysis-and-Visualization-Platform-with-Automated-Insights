@@ -2,254 +2,242 @@
 {% block title %}Case Study: {{ study_title }}{% endblock %}
 
 {% block content %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <div class="container my-5">
-    <div class="mb-4" data-aos="fade-right">
-        <a href="{{ url_for('app_blueprint.case_studies_page') }}" class="btn btn-outline-light btn-sm">
-            <i class="fa-solid fa-arrow-left me-2"></i>Back to Case Studies
+<div class="mb-4" data-aos="fade-right">
+<a class="btn btn-outline-light btn-sm" href="{{ url_for('app_blueprint.case_studies_page') }}">
+<i class="fa-solid fa-arrow-left me-2"></i>Back to Case Studies
         </a>
-    </div>
-
-    <!-- Case Study Header -->
-    <div class="card bg-dark text-light p-4 rounded-4 mb-4 border-secondary shadow-lg" data-aos="fade-up">
-        <div class="d-flex align-items-center mb-3">
-            <div class="icon-box me-3 p-3 rounded-circle" style="background: {{ icon_bg }}; color: {{ icon_color }};">
-                <i class="fa-solid {{ icon_class }} fa-2x"></i>
-            </div>
-            <div>
-                <span class="badge bg-secondary mb-1">BUSINESS CASE STUDY</span>
-                <h2 class="fw-bold mb-0 text-gradient">{{ study_title }}</h2>
-            </div>
-        </div>
-        <p class="text-muted mb-0">{{ study_desc }}</p>
-    </div>
-
-    <div class="row">
-        <!-- Left: Case Study Configuration Controls -->
-        <div class="col-lg-4 mb-4" data-aos="fade-right">
-            <div class="card bg-dark text-light p-3 border-secondary rounded-3 h-100 shadow-lg">
-                <h5 class="fw-bold text-gradient mb-3"><i class="fa-solid fa-sliders me-2"></i>Simulation Inputs</h5>
-                <div id="simulationForm">
-                    <input type="hidden" id="studyId" value="{{ study_id }}">
+</div>
+<!-- Case Study Header -->
+<div class="card bg-dark text-light p-4 rounded-4 mb-4 border-secondary shadow-lg" data-aos="fade-up">
+<div class="d-flex align-items-center mb-3">
+<div class="icon-box me-3 p-3 rounded-circle" style="background: {{ icon_bg }}; color: {{ icon_color }};">
+<i class="fa-solid {{ icon_class }} fa-2x"></i>
+</div>
+<div>
+<span class="badge bg-secondary mb-1">BUSINESS CASE STUDY</span>
+<h2 class="fw-bold mb-0 text-gradient">{{ study_title }}</h2>
+</div>
+</div>
+<p class="text-muted mb-0">{{ study_desc }}</p>
+</div>
+<div class="row">
+<!-- Left: Case Study Configuration Controls -->
+<div class="col-lg-4 mb-4" data-aos="fade-right">
+<div class="card bg-dark text-light p-3 border-secondary rounded-3 h-100 shadow-lg">
+<h5 class="fw-bold text-gradient mb-3"><i class="fa-solid fa-sliders me-2"></i>Simulation Inputs</h5>
+<div id="simulationForm">
+<input id="studyId" type="hidden" value="{{ study_id }}"/>
 
                     {% if study_id == 'churn' %}
                     <!-- CHURN SIMULATOR CONTROLS -->
-                    <div class="form-group mb-3">
-                        <label class="small text-warning fw-bold">Classification Threshold:</label>
-                        <input type="range" class="form-range w-100" id="churnThreshold" min="0.1" max="0.9" step="0.05" value="0.5">
-                        <div class="d-flex justify-content-between small text-muted"><span>0.1 (Aggressive)</span><span id="churnThresholdVal">0.50</span><span>0.9 (Conservative)</span></div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="small text-warning fw-bold">Incentive Offer Cost ($):</label>
-                        <input type="number" class="form-control bg-secondary text-light border-secondary" id="incentiveCost" value="20" min="5" max="100">
-                        <small class="text-muted">Direct cost to target a high-risk customer.</small>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="small text-warning fw-bold">Retention Success Rate (%):</label>
-                        <input type="range" class="form-range w-100" id="retentionRate" min="10" max="90" step="5" value="50">
-                        <div class="d-flex justify-content-between small text-muted"><span>10%</span><span id="retentionRateVal">50%</span><span>90%</span></div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="small text-warning fw-bold">Customer Lifetime Value ($):</label>
-                        <input type="number" class="form-control bg-secondary text-light border-secondary" id="clv" value="200" min="50" max="1000">
-                        <small class="text-muted">Total value lost if a flagged customer churns.</small>
-                    </div>
+<div class="form-group mb-3">
+<label class="small text-warning fw-bold">Classification Threshold:</label>
+<input class="form-range w-100" id="churnThreshold" max="0.9" min="0.1" step="0.05" type="range" value="0.5"/>
+<div class="d-flex justify-content-between small text-muted"><span>0.1 (Aggressive)</span><span id="churnThresholdVal">0.50</span><span>0.9 (Conservative)</span></div>
+</div>
+<div class="form-group mb-3">
+<label class="small text-warning fw-bold">Incentive Offer Cost ($):</label>
+<input class="form-control bg-secondary text-light border-secondary" id="incentiveCost" max="100" min="5" type="number" value="20"/>
+<small class="text-muted">Direct cost to target a high risk customer.</small>
+</div>
+<div class="form-group mb-3">
+<label class="small text-warning fw-bold">Retention Success Rate (%):</label>
+<input class="form-range w-100" id="retentionRate" max="90" min="10" step="5" type="range" value="50"/>
+<div class="d-flex justify-content-between small text-muted"><span>10%</span><span id="retentionRateVal">50%</span><span>90%</span></div>
+</div>
+<div class="form-group mb-3">
+<label class="small text-warning fw-bold">Customer Lifetime Value ($):</label>
+<input class="form-control bg-secondary text-light border-secondary" id="clv" max="1000" min="50" type="number" value="200"/>
+<small class="text-muted">Total value lost if a flagged customer churns.</small>
+</div>
 
                     {% elif study_id == 'rfm' %}
                     <!-- RFM CLUSTERING CONTROLS -->
-                    <div class="form-group mb-3">
-                        <label class="small text-purple fw-bold">Number of Target Clusters (K):</label>
-                        <input type="range" class="form-range w-100" id="rfmK" min="2" max="6" step="1" value="4">
-                        <div class="d-flex justify-content-between small text-muted"><span>K = 2</span><span id="rfmKVal" class="fw-bold">4</span><span>K = 6</span></div>
-                        <small class="text-muted mt-1 d-block">Number of distinct market segments to generate via K-Means.</small>
-                    </div>
+<div class="form-group mb-3">
+<label class="small text-purple fw-bold">Number of Target Clusters (K):</label>
+<input class="form-range w-100" id="rfmK" max="6" min="2" step="1" type="range" value="4"/>
+<div class="d-flex justify-content-between small text-muted"><span>K = 2</span><span class="fw-bold" id="rfmKVal">4</span><span>K = 6</span></div>
+<small class="text-muted mt-1 d-block">Number of distinct market segments to generate via K Means.</small>
+</div>
 
                     {% elif study_id == 'sales' %}
                     <!-- SALES FORECAST CONTROLS -->
-                    <div class="form-group mb-3">
-                        <label class="small text-success fw-bold">Forecasting Model:</label>
-                        <select class="form-control bg-secondary text-light border-secondary" id="salesModel">
-                            <option value="regression">Seasonal Time-Index Regression</option>
-                            <option value="holt_linear">Holt's Linear Trend</option>
-                            <option value="ses">Simple Exponential Smoothing</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="small text-success fw-bold">Projection Horizon (Days):</label>
-                        <input type="number" class="form-control bg-secondary text-light border-secondary" id="salesHorizon" value="30" min="7" max="90">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="small text-success fw-bold">Promotional Discount Boost ($):</label>
-                        <input type="range" class="form-range w-100" id="promoBoost" min="0" max="300" step="20" value="150">
-                        <div class="d-flex justify-content-between small text-muted"><span>$0</span><span id="promoBoostVal">$150</span><span>$300</span></div>
-                    </div>
+<div class="form-group mb-3">
+<label class="small text-success fw-bold">Forecasting Model:</label>
+<select class="form-control bg-secondary text-light border-secondary" id="salesModel">
+<option value="regression">Seasonal Time Index Regression</option>
+<option value="holt_linear">Holt's Linear Trend</option>
+<option value="ses">Simple Exponential Smoothing</option>
+</select>
+</div>
+<div class="form-group mb-3">
+<label class="small text-success fw-bold">Projection Horizon (Days):</label>
+<input class="form-control bg-secondary text-light border-secondary" id="salesHorizon" max="90" min="7" type="number" value="30"/>
+</div>
+<div class="form-group mb-3">
+<label class="small text-success fw-bold">Promotional Discount Boost ($):</label>
+<input class="form-range w-100" id="promoBoost" max="300" min="0" step="20" type="range" value="150"/>
+<div class="d-flex justify-content-between small text-muted"><span>$0</span><span id="promoBoostVal">$150</span><span>$300</span></div>
+</div>
 
                     {% elif study_id == 'price' %}
                     <!-- PRICE ELASTICITY CONTROLS -->
-                    <div class="form-group mb-3">
-                        <label class="small text-warning fw-bold">Set Price Point ($):</label>
-                        <input type="range" class="form-range w-100" id="pricePoint" min="10" max="80" step="2" value="30">
-                        <div class="d-flex justify-content-between small text-muted"><span>$10</span><span id="pricePointVal" class="fw-bold">$30</span><span>$80</span></div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="small text-warning fw-bold">Competitor Price ($):</label>
-                        <input type="number" class="form-control bg-secondary text-light border-secondary" id="priceComp" value="35" min="15" max="75">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="small text-warning fw-bold">Marketing Spend ($):</label>
-                        <input type="number" class="form-control bg-secondary text-light border-secondary" id="priceMkt" value="500" min="100" max="2000">
-                    </div>
+<div class="form-group mb-3">
+<label class="small text-warning fw-bold">Set Price Point ($):</label>
+<input class="form-range w-100" id="pricePoint" max="80" min="10" step="2" type="range" value="30"/>
+<div class="d-flex justify-content-between small text-muted"><span>$10</span><span class="fw-bold" id="pricePointVal">$30</span><span>$80</span></div>
+</div>
+<div class="form-group mb-3">
+<label class="small text-warning fw-bold">Competitor Price ($):</label>
+<input class="form-control bg-secondary text-light border-secondary" id="priceComp" max="75" min="15" type="number" value="35"/>
+</div>
+<div class="form-group mb-3">
+<label class="small text-warning fw-bold">Marketing Spend ($):</label>
+<input class="form-control bg-secondary text-light border-secondary" id="priceMkt" max="2000" min="100" type="number" value="500"/>
+</div>
                     {% endif %}
 
-                    <button type="button" id="runSimulationBtn" class="btn btn-block mt-3" style="background: {{ icon_color }}; color: black; font-weight: bold;">
-                        <i class="fa-solid fa-play me-2"></i>Run Scenario Simulation
+                    <button class="btn btn-block mt-3" id="runSimulationBtn" style="background: {{ icon_color }}; color: black; font-weight: bold;" type="button">
+<i class="fa-solid fa-play me-2"></i>Run Scenario Simulation
                     </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right: Case Study Live Dashboard Results -->
-        <div class="col-lg-8" data-aos="fade-left">
-            <div id="resultsCard" class="card bg-dark text-light p-4 border-secondary rounded-3 h-100 shadow-lg d-none">
-                <h4 class="fw-bold mb-4" style="color: {{ icon_color }};"><i class="fa-solid fa-gauge me-2"></i>Simulation Results</h4>
+</div>
+</div>
+</div>
+<!-- Right: Case Study Live Dashboard Results -->
+<div class="col-lg-8" data-aos="fade-left">
+<div class="card bg-dark text-light p-4 border-secondary rounded-3 h-100 shadow-lg d-none" id="resultsCard">
+<h4 class="fw-bold mb-4" style="color: {{ icon_color }};"><i class="fa-solid fa-gauge me-2"></i>Simulation Results</h4>
                 
                 {% if study_id == 'churn' %}
                 <!-- CHURN RESULTS TEMPLATE -->
-                <div class="row text-center g-3 mb-4">
-                    <div class="col-md-4">
-                        <div class="bg-secondary p-3 rounded shadow-sm">
-                            <span class="text-muted small">Total Cost (No AI Policy)</span>
-                            <h4 id="costNoAI" class="fw-bold text-danger mt-1">-</h4>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="bg-secondary p-3 rounded shadow-sm">
-                            <span class="text-muted small">Total Cost (AI Targeted)</span>
-                            <h4 id="costAI" class="fw-bold text-warning mt-1">-</h4>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="bg-secondary p-3 rounded shadow-sm" style="border: 2px solid #38ef7d;">
-                            <span class="text-muted small fw-bold">Net Financial Savings</span>
-                            <h3 id="churnSavings" class="fw-bold text-success mt-1">-</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mb-4">
-                    <div class="col-md-6 mb-3">
-                        <div id="churnCostChart" style="height: 300px;"></div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div id="churnConfusionChart" style="height: 300px;"></div>
-                    </div>
-                </div>
-
-                <div class="card bg-secondary p-3 border-0 rounded">
-                    <h6 class="fw-bold text-success"><i class="fa-solid fa-lightbulb me-2"></i>Data-Driven Strategy Recommendation</h6>
-                    <p class="small mb-0" id="churnRecommendation"></p>
-                </div>
+<div class="row text-center g-3 mb-4">
+<div class="col-md-4">
+<div class="bg-secondary p-3 rounded shadow-sm">
+<span class="text-muted small">Total Cost (No AI Policy)</span>
+<h4 class="fw-bold text-danger mt-1" id="costNoAI">-</h4>
+</div>
+</div>
+<div class="col-md-4">
+<div class="bg-secondary p-3 rounded shadow-sm">
+<span class="text-muted small">Total Cost (AI Targeted)</span>
+<h4 class="fw-bold text-warning mt-1" id="costAI">-</h4>
+</div>
+</div>
+<div class="col-md-4">
+<div class="bg-secondary p-3 rounded shadow-sm" style="border: 2px solid #38ef7d;">
+<span class="text-muted small fw-bold">Net Financial Savings</span>
+<h3 class="fw-bold text-success mt-1" id="churnSavings">-</h3>
+</div>
+</div>
+</div>
+<div class="row mb-4">
+<div class="col-md-6 mb-3">
+<div id="churnCostChart" style="height: 300px;"></div>
+</div>
+<div class="col-md-6 mb-3">
+<div id="churnConfusionChart" style="height: 300px;"></div>
+</div>
+</div>
+<div class="card bg-secondary p-3 border-0 rounded">
+<h6 class="fw-bold text-success"><i class="fa-solid fa-lightbulb me-2"></i>Data Driven Strategy Recommendation</h6>
+<p class="small mb-0" id="churnRecommendation"></p>
+</div>
 
                 {% elif study_id == 'rfm' %}
                 <!-- RFM RESULTS TEMPLATE -->
-                <div class="mb-4">
-                    <div id="rfmScatterChart" style="height: 400px; width: 100%;"></div>
-                </div>
-
-                <h6 class="fw-bold text-purple mb-2"><i class="fa-solid fa-list-check me-2"></i>Segment Profiles & Action Plans</h6>
-                <div class="table-responsive">
-                    <table class="table table-sm table-dark table-striped rounded overflow-hidden">
-                        <thead>
-                            <tr>
-                                <th>Segment Name</th>
-                                <th>Size</th>
-                                <th>Recency (Avg)</th>
-                                <th>Freq (Avg)</th>
-                                <th>Monetary (Avg)</th>
-                                <th>Suggested Marketing Campaign</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rfmTableBody"></tbody>
-                    </table>
-                </div>
+<div class="mb-4">
+<div id="rfmScatterChart" style="height: 400px; width: 100%;"></div>
+</div>
+<h6 class="fw-bold text-purple mb-2"><i class="fa-solid fa-list-check me-2"></i>Segment Profiles &amp; Action Plans</h6>
+<div class="table-responsive">
+<table class="table table-sm table-dark table-striped rounded overflow-hidden">
+<thead>
+<tr>
+<th>Segment Name</th>
+<th>Size</th>
+<th>Recency (Avg)</th>
+<th>Freq (Avg)</th>
+<th>Monetary (Avg)</th>
+<th>Suggested Marketing Campaign</th>
+</tr>
+</thead>
+<tbody id="rfmTableBody"></tbody>
+</table>
+</div>
 
                 {% elif study_id == 'sales' %}
                 <!-- SALES RESULTS TEMPLATE -->
-                <div class="row text-center mb-4">
-                    <div class="col-6">
-                        <div class="bg-secondary p-3 rounded shadow-sm">
-                            <span class="text-muted small">Forecast Error (RMSE)</span>
-                            <h4 id="salesRMSE" class="fw-bold text-warning mt-1">-</h4>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="bg-secondary p-3 rounded shadow-sm">
-                            <span class="text-muted small">Mean Absolute Error (MAE)</span>
-                            <h4 id="salesMAE" class="fw-bold text-warning mt-1">-</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <div id="salesForecastChart" style="height: 350px;"></div>
-                </div>
-
-                <div class="card bg-secondary p-3 border-0 rounded">
-                    <h6 class="fw-bold text-success"><i class="fa-solid fa-cloud-sun me-2"></i>Weekly Supermarket Insights</h6>
-                    <p class="small mb-0" id="salesInsights"></p>
-                </div>
+<div class="row text-center mb-4">
+<div class="col-6">
+<div class="bg-secondary p-3 rounded shadow-sm">
+<span class="text-muted small">Forecast Error (RMSE)</span>
+<h4 class="fw-bold text-warning mt-1" id="salesRMSE">-</h4>
+</div>
+</div>
+<div class="col-6">
+<div class="bg-secondary p-3 rounded shadow-sm">
+<span class="text-muted small">Mean Absolute Error (MAE)</span>
+<h4 class="fw-bold text-warning mt-1" id="salesMAE">-</h4>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<div id="salesForecastChart" style="height: 350px;"></div>
+</div>
+<div class="card bg-secondary p-3 border-0 rounded">
+<h6 class="fw-bold text-success"><i class="fa-solid fa-cloud-sun me-2"></i>Weekly Supermarket Insights</h6>
+<p class="small mb-0" id="salesInsights"></p>
+</div>
 
                 {% elif study_id == 'price' %}
                 <!-- PRICE ELASTICITY RESULTS TEMPLATE -->
-                <div class="row text-center g-3 mb-4">
-                    <div class="col-md-4">
-                        <div class="bg-secondary p-3 rounded shadow-sm">
-                            <span class="text-muted small">Projected Demand</span>
-                            <h4 id="priceProjDemand" class="fw-bold text-warning mt-1">-</h4>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="bg-secondary p-3 rounded shadow-sm">
-                            <span class="text-muted small">Projected Revenue</span>
-                            <h4 id="priceProjRev" class="fw-bold text-warning mt-1">-</h4>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="bg-secondary p-3 rounded shadow-sm" style="border: 2px solid #ff007f;">
-                            <span class="text-muted small fw-bold">Optimal Pricing Point</span>
-                            <h4 id="priceOptimal" class="fw-bold text-success mt-1">-</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mb-4">
-                    <div class="col-md-6 mb-3">
-                        <div id="priceDemandCurve" style="height: 300px;"></div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div id="priceRevenueCurve" style="height: 300px;"></div>
-                    </div>
-                </div>
-
-                <div class="card bg-secondary p-3 border-0 rounded">
-                    <h6 class="fw-bold text-success"><i class="fa-solid fa-calculator me-2"></i>Elasticity Interpretation</h6>
-                    <p class="small mb-0" id="priceElasticityText"></p>
-                </div>
+<div class="row text-center g-3 mb-4">
+<div class="col-md-4">
+<div class="bg-secondary p-3 rounded shadow-sm">
+<span class="text-muted small">Projected Demand</span>
+<h4 class="fw-bold text-warning mt-1" id="priceProjDemand">-</h4>
+</div>
+</div>
+<div class="col-md-4">
+<div class="bg-secondary p-3 rounded shadow-sm">
+<span class="text-muted small">Projected Revenue</span>
+<h4 class="fw-bold text-warning mt-1" id="priceProjRev">-</h4>
+</div>
+</div>
+<div class="col-md-4">
+<div class="bg-secondary p-3 rounded shadow-sm" style="border: 2px solid #ff007f;">
+<span class="text-muted small fw-bold">Optimal Pricing Point</span>
+<h4 class="fw-bold text-success mt-1" id="priceOptimal">-</h4>
+</div>
+</div>
+</div>
+<div class="row mb-4">
+<div class="col-md-6 mb-3">
+<div id="priceDemandCurve" style="height: 300px;"></div>
+</div>
+<div class="col-md-6 mb-3">
+<div id="priceRevenueCurve" style="height: 300px;"></div>
+</div>
+</div>
+<div class="card bg-secondary p-3 border-0 rounded">
+<h6 class="fw-bold text-success"><i class="fa-solid fa-calculator me-2"></i>Elasticity Interpretation</h6>
+<p class="small mb-0" id="priceElasticityText"></p>
+</div>
                 {% endif %}
             </div>
-
-            <!-- Placeholder -->
-            <div id="resultsPlaceholder" class="card bg-dark text-light p-5 border-secondary rounded-3 h-100 shadow-lg text-center d-flex align-items-center justify-content-center">
-                <div class="py-5">
-                    <i class="fa-solid fa-calculator fa-4x mb-3" style="color: {{ icon_color }};"></i>
-                    <h4>Simulation Ready</h4>
-                    <p class="text-muted">Adjust pricing, retention costs, thresholds, or seasonal details and run the simulation models.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- Placeholder -->
+<div class="card bg-dark text-light p-5 border-secondary rounded-3 h-100 shadow-lg text-center d-flex align-items-center justify-content-center" id="resultsPlaceholder">
+<div class="py-5">
+<i class="fa-solid fa-calculator fa-4x mb-3" style="color: {{ icon_color }};"></i>
+<h4>Simulation Ready</h4>
+<p class="text-muted">Adjust pricing, retention costs, thresholds, or seasonal details and run the simulation models.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 {% endblock %}
 
@@ -257,7 +245,6 @@
 {{ super() }}
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-
 <script>
 AOS.init({ duration: 1000, once: true });
 
@@ -361,7 +348,6 @@ $(document).ready(function() {
     });
 });
 </script>
-
 <style>
 .icon-box {
     display: inline-flex;

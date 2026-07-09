@@ -5,34 +5,30 @@
 
 {% block content %}
 <body class="text-center">
-    <div class="container mt-5">
-        <form method="POST" class="form-signin neon-glow p-4 rounded" style="color:white; background: rgba(255,255,255,0.05); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 0 25px rgba(0,191,255,0.2); max-width: 450px; margin: auto;">
+<div class="container mt-5">
+<form class="form-signin neon-glow p-4 rounded" method="POST" style="color:white; background: rgba(255,255,255,0.05); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 0 25px rgba(0,191,255,0.2); max-width: 450px; margin: auto;">
             {{ form.hidden_tag() }}
 
             <h1 class="h4 mb-4 font-weight-bold text-white" style="color:#00bfff">
                 Welcome Back
             </h1>
-
-            <div class="form-group text-left">
-                {{ form.username.label(class="font-weight-bold") }}
-                {{ form.username(class="form-control fancy-input", placeholder="User Name") }}
+<div class="form-group text-left">
+                {{ form.username.label(class="font weight bold") }}
+                {{ form.username(class="form control fancy input", placeholder="User Name") }}
             </div>
-
-            <div class="form-group text-left">
-                {{ form.pswd.label(class="font-weight-bold") }}
-                {{ form.pswd(class="form-control fancy-input", placeholder="Password") }}
+<div class="form-group text-left">
+                {{ form.pswd.label(class="font weight bold") }}
+                {{ form.pswd(class="form control fancy input", placeholder="Password") }}
             </div>
+<div class="mt-3 mb-3 text-light">
+<h6>Don't have an account?</h6>
+<a class="btn btn-sm btn-outline-info" href="{{ url_for('app_blueprint.register_page') }}">Register</a>
+</div>
 
-            <div class="mt-3 mb-3 text-light">
-                <h6>Don't have an account?</h6>
-                <a class="btn btn-sm btn-outline-info" href="{{ url_for('app_blueprint.register_page') }}">Register</a>
-            </div>
-
-            {{ form.submit(class="btn btn-lg btn-block btn-glow") }}
+            {{ form.submit(class="btn btn lg btn block btn glow") }}
         </form>
-    </div>
+</div>
 </body>
-
 <style>
   .neon-glow {
     animation: pulseGlow 3s ease-in-out infinite;

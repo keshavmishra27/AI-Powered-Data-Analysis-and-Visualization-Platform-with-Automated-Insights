@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Data Understanding{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2>2. Data Understanding Agent</h2>
+    <div class="row mt-4">
+        
+        <!-- Data Quality Score -->
+        <div class="col-md-4">
+            <div class="card bg-dark mb-4">
+                <div class="card-body text-center">
+                    <h4>Overall Dataset Quality</h4>
+                    <h1 class="display-3 text-success">{{ quality.overall }} <small class="text-muted" style="font-size: 0.4em;">/ 100</small></h1>
+                    <hr>
+                    <ul class="list-unstyled text-start">
+                        <li>Completeness: <span class="float-end">{{ quality.breakdown.Completeness }}</span></li>
+                        <li>Consistency: <span class="float-end">{{ quality.breakdown.Consistency }}</span></li>
+                        <li>Duplicates: <span class="float-end">{{ quality.breakdown.Duplicates }}</span></li>
+                        <li>Outliers: <span class="float-end">{{ quality.breakdown.Outliers }}</span></li>
+                        <li>Validity: <span class="float-end">{{ quality.breakdown.Validity }}</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            {% if not suitability.is_suitable %}
+            <div class="alert alert-danger">
+                <h5>Dataset Unsuitable for ML</h5>
+                <ul>
+                    {% for reason in suitability.reasons %}
+                    <li>{{ reason }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Schema and Explanation -->
+        <div class="col-md-8">
+            <div class="card bg-dark mb-4">
+                <div class="card-body">
+                    <h4>LLM Schema Explanation</h4>
+                    <p class="lead">{{ explanation.summary }}</p>
+                    <h5>Implications:</h5>
+                    <ul>
+                        {% for imp in explanation.implications %}
+                        <li>{{ imp }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cleaning Suggestions -->
+            <div class="card bg-dark">
+                <div class="card-body">
+                    <h4>Data Preparation Agent (Pending)</h4>
+                    <p>The following cleaning actions are recommended based on the dataset profile:</p>
+                    <form action="{{ url_for('app_blueprint.data_preparation') }}" method="POST">
+                        <ul class="list-group list-group-flush mb-3">
+                            {% for sugg in suggestions %}
+                            <li class="list-group-item bg-dark text-light border-secondary">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="action_{{ sugg.id }}" id="{{ sugg.id }}" checked>
+                                    <label class="form-check-label" for="{{ sugg.id }}">
+                                        {{ sugg.description }}
+                                    </label>
+                                </div>
+                            </li>
+                            {% else %}
+                            <li class="list-group-item bg-dark text-light border-secondary">No cleaning needed! Dataset is pristine.</li>
+                            {% endfor %}
+                        </ul>
+                        <button type="submit" class="btn btn-success" {% if not suitability.is_suitable and session.get('goal') == 'predict' %}disabled{% endif %}>
+                            Approve & Execute Cleaning
+                        </button>
+                        {% if not suitability.is_suitable and session.get('goal') == 'predict' %}
+                        <small class="text-danger d-block mt-2">Cannot proceed with prediction goal due to dataset suitability errors.</small>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

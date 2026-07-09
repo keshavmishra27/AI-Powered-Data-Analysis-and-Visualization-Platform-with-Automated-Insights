@@ -45,7 +45,7 @@ def create_app():
     bcrypt.init_app(app)
     CORS(app)
 
-    # Flask-Login config
+    # Flask Login config
     login_manager.login_view = "app_blueprint.login_page"
 
     # ✅ Configure Gemini API (from .env)
@@ -56,6 +56,9 @@ def create_app():
 
     # Register blueprints
     from backend.app import app_blueprint
+    from backend.analytics_routes import analytics_bp
+    
     app.register_blueprint(app_blueprint)
+    app.register_blueprint(analytics_bp)
 
     return app

@@ -1,2 +1,32 @@
+# Environment variables
 .env
 .env.*
+
+# Python caches and environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+env/
+.Python
+
+# Application data & databases
+instance/
+uploads/
+exports/
+*.sqlite3
+*.db
+
+# Temporary scripts & data
+generate_messy.py
+refactor_hyphens.py
+remove_emojis.py
+*.csv
+*.xlsx
+
+# IDE & Agent configs
+.vscode/
+.idea/
+.gemini/
+.agent/
